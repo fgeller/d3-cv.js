@@ -33,7 +33,7 @@
 		location: "Palo Alto, CA",
 		summary: [
 		    "Developed compiler-frontend and AST transformer for research database access language.",
-		    "Technologies included the Newspeak programming language and Javascript.",
+		    "Technologies included the <a href='http://www.newspeaklanguage.org/'>Newspeak</a> programming language and Javascript.",
 		],
 	    },
 	    {
