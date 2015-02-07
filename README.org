@@ -1,3 +1,9 @@
+* Tasks
+** TODO Draw textual description
+** TODO Center and highlight timeline box when hovering over textual entry
+** TODO Highlight and scroll to textual description when hovering over timeline box
+** TODO Draw header information
+** TODO Fix loading issues (don't inline script in body?)
 * Resources
 
   https://github.com/glena/d3-resume
