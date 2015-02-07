@@ -6,4 +6,5 @@
 ** TODO Fix loading issues (don't inline script in body?)
 * Resources
 
+  http://d3js.org/
   https://github.com/glena/d3-resume
