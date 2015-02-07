@@ -2,52 +2,97 @@
 (function () {
 
     var entries = [
-	{
-	    type: "professional",
-	    start: new Date("2012-10-01"),
-	    end: null,
-	    title: "Plants Engineer",
-	    company: "ACME",
-	    location: "Austin, TX",
-	},
-	{
-	    type: "professional",
-	    start: new Date("2009-07-01"),
-	    end: new Date("2012-09-30"),
-	    title: "Tree Engineer",
-	    company: "Example.org",
-	    location: "Palo Alto, CA",
-	},
-	{
-	    type: "professional",
-	    start: new Date("2006-07-01"),
-	    end: new Date("2009-01-30"),
-	    title: "Tree Engineer",
-	    company: "Example.org",
-	    location: "Palo Alto, CA",
-	},
-	{
-	    type: "professional",
-	    start: new Date("2002-07-01"),
-	    end: new Date("2005-01-30"),
-	    title: "Tree Engineer",
-	    company: "Example.org",
-	    location: "Palo Alto, CA",
-	},
-	{
+	
+
+	{ // Abi
 	    type: "academic",
-	    start: new Date("1990-09-01"),
+	    start: new Date("1994-09-01"),
 	    end: new Date("2003-06-01"),
-	    degree: "High School",
-	    location: "New Haven, CT",
+	    degree: "Abitor",
+	    institution: "Gymnasium",
+	    location: "Bad Königshofen",
 	},
-	{
+	{ // B.Sc.
 	    type: "academic",
 	    start: new Date("2004-08-01"),
 	    end: new Date("2007-05-01"),
-	    degree: "High School",
-	    location: "New Haven, CT",
-	}
+	    degree: "Bachelor of Science",
+	    institution: "Worcester Polytechnic Institute",
+	    location: "Worcester, USA",
+	},
+	{ // M.Sc.
+	    type: "academic",
+	    start: new Date("2007-10-01"),
+	    end: new Date("2010-04-01"),
+	    institution: "Hasso Plattner Institut",
+	    degree: "Master of Science",
+	    location: "Potsdam, D",
+	},
+	{ // Ph.D.
+	    type: "academic",
+	    start: new Date("2010-04-01"),
+	    end: new Date("2011-02-01"),
+	    institution: "Hasso Plattner Institut",
+	    degree: "",
+	    location: "Potsdam, D",
+	},
+
+	{
+	    type: "professional",
+	    start: new Date("2012-12-10"),
+	    end: null,
+	    title: "Software Engineer",
+	    company: "Movio Ltd.",
+	    location: "Auckland, NZ",
+	},
+	{
+	    type: "professional",
+	    start: new Date("2011-09-01"),
+	    end: new Date("2012-10-30"),
+	    title: "Software Developer",
+	    company: "IPTEGO GmbH",
+	    location: "Berlin, D",
+	},
+	{
+	    type: "professional",
+	    start: new Date("2011-02-01"),
+	    end: new Date("2011-04-30"),
+	    title: "Software Developer",
+	    company: "SAP Labs",
+	    location: "Palo Alto, CA",
+	},
+	{
+	    type: "professional",
+	    start: new Date("2008-11-01"),
+	    end: new Date("2010-02-28"),
+	    title: "Software Developer",
+	    company: "Finn GmbH",
+	    location: "Berlin, D",
+	},
+	{
+	    type: "professional",
+	    start: new Date("2008-03-01"),
+	    end: new Date("2008-09-30"),
+	    title: "Software Developer",
+	    company: "SAP Research",
+	    location: "St. Gallen, CH",
+	},
+	{
+	    type: "professional",
+	    start: new Date("2005-03-01"),
+	    end: new Date("2006-03-30"),
+	    title: "Web Developer",
+	    company: "Worcester Polytechnic Institute",
+	    location: "Worcester, USA",
+	},
+	{
+	    type: "professional",
+	    start: new Date("2003-07-01"),
+	    end: new Date("2003-08-31"),
+	    title: "Software Developer",
+	    company: "Charles River Laboratories",
+	    location: "Wilmington, USA",
+	},
     ];
     var container = d3.select("#resume-container");
 
@@ -66,10 +111,9 @@
     timeline.attr("class", "timeline");
     timeline.attr("width", width + "px");
     timeline.attr("height", height + "px");
-    timeline.style("background-color", d3.hsl(220, 0.25, 0.9));
+    timeline.style("background-color", "white");
 
-
-    var startDate = new Date("1984-02-23");
+    var startDate = new Date("1994-01-01");
     var endDate = new Date();
 
     var scale = d3.time.scale()
@@ -111,7 +155,19 @@
 
 	return scale(d.end) - scale(d.start);
     };
-    var boxHeight = 10;
+    var boxHeight = function (d) {
+	var preferredHeight = 20;
+
+	if (!d) {
+	    return preferredHeight;
+	}
+
+	if (isDateCollision(d) && d.type === "professional") {
+	    return preferredHeight / 2;
+	}
+
+	return preferredHeight;
+    };
     var boxClass = function (d) {
 	return 'timeline-' + d.type + '-box';
     };
@@ -119,13 +175,13 @@
     var boxX = function (d) {
 	return scale(d.start);
     };
-    var professionalYOffset = 20;
+    var professionalYOffset = boxHeight() / 2;
     var boxY = function (d) {
 	if (isDateCollision(d) && d.type === "professional") {
-	    return timelineHeight - professionalYOffset - boxHeight;
+	    return timelineHeight - professionalYOffset - boxHeight(d);
 	}
 
-	return timelineHeight - boxHeight;
+	return timelineHeight - boxHeight(d);
     };
 
     timeline.selectAll('.timeline')
