@@ -5,6 +5,8 @@
 ** TODO Draw header information
 ** TODO Fix loading issues (don't inline script in body?)
 ** TODO Inline web font?
+** TODO constrain timeline to container width + scrollable
+** TODO scroll timeline to today on load
 * Resources
 
   http://d3js.org/
