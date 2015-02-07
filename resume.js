@@ -160,12 +160,12 @@
 	return html;
     };
 
-    // TODO: not sure why i need this selectAll vs select vs just description
     description
         .append('div')
         .attr('class', 'description-header')
         .text('Professional Experience');
 
+    // TODO: not sure why i need this selectAll vs select vs just description
     description.selectAll(".description")
     	.data(resume.professionalExperience)
     	.enter()
