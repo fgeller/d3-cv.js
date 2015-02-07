@@ -227,7 +227,7 @@
 	return scale(d.end) - scale(d.start);
     };
     var boxHeight = function (d) {
-	var preferredHeight = 10;
+	var preferredHeight = 12;
 
 	return preferredHeight;
     };
