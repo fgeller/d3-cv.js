@@ -162,7 +162,7 @@
 	return scale(d.end) - scale(d.start);
     };
     var boxHeight = function (d) {
-	var preferredHeight = 40;
+	var preferredHeight = 10;
 
 	return preferredHeight;
     };
@@ -175,11 +175,9 @@
     };
     var professionalYOffset = boxHeight() / 2;
     var boxY = function (d) {
-	if (isDateCollision(d) && d.type === "professional") {
-	    return timelineHeight - professionalYOffset - boxHeight(d);
-	}
+	var isCollision = isDateCollision(d) && d.type === "professional";
 
-	return timelineHeight - boxHeight(d) - 2;
+	return timelineHeight - boxHeight(d) - 2 - (isCollision ? professionalYOffset : 0);
     };
 
     timeline.selectAll('.timeline')
