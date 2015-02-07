@@ -4,6 +4,7 @@
 ** TODO Highlight and scroll to textual description when hovering over timeline box
 ** TODO Draw header information
 ** TODO Fix loading issues (don't inline script in body?)
+** TODO Inline web font?
 * Resources
 
   http://d3js.org/
