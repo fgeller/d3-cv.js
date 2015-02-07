@@ -6,6 +6,7 @@
 	    {
 		start: new Date("2012-12-10"),
 		title: "Software Engineer",
+		role: "Full-time",
 		company: "Movio Ltd.",
 		location: "Auckland, NZ",
 		summary: [
@@ -16,6 +17,7 @@
 		start: new Date("2011-09-01"),
 		end: new Date("2012-10-30"),
 		title: "Software Developer",
+		role: "Full-time",
 		company: "IPTEGO GmbH",
 		location: "Berlin, D",
 		summary: [
@@ -28,7 +30,7 @@
 		start: new Date("2011-02-01"),
 		end: new Date("2011-04-30"),
 		title: "Software Developer",
-		internship: true,
+		role: "Internship",
 		company: "SAP Labs",
 		location: "Palo Alto, CA",
 		summary: [
@@ -40,6 +42,7 @@
 		start: new Date("2008-11-01"),
 		end: new Date("2010-02-28"),
 		title: "Software Developer",
+		role: "Part-time",
 		company: "Finn GmbH",
 		location: "Berlin, D",
 		summary: [
@@ -52,7 +55,7 @@
 		start: new Date("2008-03-01"),
 		end: new Date("2008-09-30"),
 		title: "Software Developer",
-		internship: true,
+		role: "Internship",
 		company: "SAP Research",
 		location: "St. Gallen, CH",
 		summary: [
@@ -65,6 +68,7 @@
 		start: new Date("2005-03-01"),
 		end: new Date("2006-03-30"),
 		title: "Web Developer",
+		role: "Working student",
 		company: "Worcester Polytechnic Institute",
 		location: "Worcester, USA",
 		summary: [
@@ -86,7 +90,7 @@
 		start: new Date("2003-07-01"),
 		end: new Date("2003-08-31"),
 		title: "Software Developer",
-		internship: true,
+		role: "Internship",
 		company: "Charles River Laboratories",
 		location: "Wilmington, USA",
 		summary: [
@@ -136,13 +140,15 @@
 	var monthYearFormat = d3.time.format("%m/%Y");
 
 	var html = '';
-	html += '<div class="description-professional-experience-header">'
-	html += '<div class="description-professional-experience-summary">'
+	html += '<div class="description-professional-experience-header">';
+	html += '<div class="description-professional-experience-summary">';
 	html += '<span class="description-professional-experience-title">' + d.title + '</span>';
-	html += ' - at <span class="description-professional-experience-company">' + d.company + '</span>';
+	html += ' — ';
+	html += ' <span class="description-professional-experience-role">' + d.role + '</span>';
+	html += ' at <span class="description-professional-experience-company">' + d.company + '</span>';
 	html += ' in <span class="description-professional-experience-location">' + d.location + '</span>';
 	html += '</div>';
-	html += '<div class="description-professional-experience-date">'
+	html += '<div class="description-professional-experience-date">';
 	html += '<span class="description-professional-date-start">' + monthYearFormat(d.start) + '</span>';
 	html += '—<span class="description-professional-date-end">' + (d.end ? monthYearFormat(d.end) : 'present') + '</span>';
 	html += '</div>';
