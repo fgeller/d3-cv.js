@@ -7,7 +7,10 @@
 ** TODO Inline web font?
 ** TODO constrain timeline to container width + scrollable
 ** TODO scroll timeline to today on load
+** TODO rounded boxes?
+   http://tutorials.jenkov.com/svg/rect-element.html
 * Resources
 
   http://d3js.org/
   https://github.com/glena/d3-resume
+  http://flatuicolors.com/
