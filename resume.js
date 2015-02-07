@@ -99,33 +99,55 @@
 		],
 	    },
 	],
-	academicExperience: [
-	    { // Abi
-		start: new Date("1994-09-01"),
-		end: new Date("2003-06-01"),
-		degree: "Abitur",
-		institution: "Gymnasium",
-		location: "Bad Königshofen im Grabfeld",
-	    },
-	    { // B.Sc.
-		start: new Date("2004-08-01"),
-		end: new Date("2007-05-01"),
-		degree: "Bachelor of Science",
-		institution: "Worcester Polytechnic Institute",
-		location: "Worcester, USA",
-	    },
+	degrees: [
 	    { // M.Sc.
 		start: new Date("2007-10-01"),
 		end: new Date("2010-04-01"),
 		institution: "Hasso Plattner Institut",
 		degree: "Master of Science",
+		distinction: "(Outstanding)",
+		concentration: "in IT-Systems Engineering",
 		location: "Potsdam, D",
+	    },
+	    { // B.Sc.
+		start: new Date("2004-08-01"),
+		end: new Date("2007-05-01"),
+		degree: "Bachelor of Science",
+		distinction: "(High Distinction)",
+		concentration: "in Computer Science",
+		institution: "Worcester Polytechnic Institute",
+		location: "Worcester, USA",
+	    },
+	    { // Abi
+		start: new Date("1994-09-01"),
+		end: new Date("2003-06-01"),
+		degree: "Abitur",
+		distinction: "(Good)",
+		concentration: "with Honors Courses in Mathematics and Physics",
+		institution: "Gymnasium",
+		location: "Bad Königshofen im Grabfeld, D",
+	    },
+	],
+	academicExperience: [
+	    { // TA @HPI.
+		start: new Date("2009-10-01"),
+		end: new Date("2010-03-31"),
+		title: "Teaching Assistant",
+		institution: "Hasso Plattner Institut",
+		location: "Potsdam, D",
+	    },
+	    { // RA @Brown.
+		start: new Date("2006-07-01"),
+		end: new Date("2006-08-31"),
+		title: "Resarch Assistant",
+		institution: "Brown University",
+		location: "Providence, USA",
 	    },
 	    { // Ph.D.
 		start: new Date("2010-04-01"),
 		end: new Date("2011-02-01"),
+		title: "Ph.D. Candidate",
 		institution: "Hasso Plattner Institut",
-		degree: "",
 		location: "Potsdam, D",
 	    },
 	],
@@ -135,10 +157,9 @@
 
     var description = container.append("div");
     description.attr('class', 'description');
+    var monthYearFormat = d3.time.format("%m/%Y");
 
     var professionalExperienceDescription = function (d) {
-	var monthYearFormat = d3.time.format("%m/%Y");
-
 	var html = '';
 	html += '<div class="description-professional-experience-header">';
 	html += '<div class="description-professional-experience-summary">';
@@ -179,6 +200,40 @@
     	.attr('class', 'description-professional-experience')
 	.html(professionalExperienceDescription);
 
+    /* ----- EDUCATION ------ */
+
+    description
+        .append('div')
+        .attr('class', 'description-header')
+        .text('Education');
+
+    var educationDegreeDescription = function (d) {
+	var html = '';
+	html += '<div class="description-education-degree-summary">';
+	html += '<span class="description-education-degree-title">' + d.degree + '</span>';
+	html += ' at <span class="description-education-degree-institution">' + d.institution + '</span>';
+	html += ' <span class="description-education-degree-distinction">' + d.distinction + '</span>';
+	html += ' <span class="description-education-degree-concentration">' + d.concentration + '</span>';
+	html += ', <span class="description-education-degree-location">' + d.location + '</span>';
+	html += '</div>';
+	html += '<div class="description-education-degree-dates">';
+	html += '<span class="description-education-degree-start">' + monthYearFormat(d.start) + '</span>';
+	html += '—<span class="description-education-degree-end">' + (d.end ? monthYearFormat(d.end) : 'present') + '</span>';
+	html += '</div>';
+
+	return html;
+    };
+
+    // TODO: not sure why i need this selectAll vs select vs just description
+    description.selectAll(".description")
+    	.data(resume.degrees)
+    	.enter()
+    	.append('div')
+    	.attr('class', 'description-education-degree')
+	.html(educationDegreeDescription);
+
+    /* ----- TIMELINE ------ */
+
     var timeline = container.append("svg");
     var margin = {top: 20, right: 20, bottom: 10, left:10},
 	width = 2000,
@@ -211,18 +266,16 @@
     	.attr('class', 'x axis')
     	.call(line);
 
-    var isDateCollision = function (entry) {
+    var isDateCollision = function (entry, others) {
 	var contains = function (entry, date) {
 	    return date > entry.start && date < entry.end
 	};
-	var experience = resume.professionalExperience.concat(resume.academicExperience);
-	var collisions = experience.filter(
+
+	return others.some(
 	    function (other) {
 		return contains(other, entry.start) || contains(other, entry.end);
 	    }
 	);
-
-	return collisions.length > 0
     };
 
     var boxWidth = function (d) {
@@ -232,6 +285,7 @@
 
 	return scale(d.end) - scale(d.start);
     };
+
     var boxHeight = function (d) {
 	var preferredHeight = 12;
 
@@ -242,6 +296,7 @@
 	return scale(d.start);
     };
     var professionalYOffset = boxHeight() / 2;
+    var academicYOffset = boxHeight();
     var boxY = function (type) {
 	var boxOffset = function (d) {
 	    return timelineHeight - boxHeight(d) - 2;
@@ -249,7 +304,15 @@
 
 	if (type === "professional") {
 	    return function (d) {
-		return boxOffset(d) - (isDateCollision(d) ? professionalYOffset : 0);
+		var isCollision = isDateCollision(d, resume.degrees);
+		return boxOffset(d) - (isCollision ? professionalYOffset : 0);
+	    };
+	}
+
+	if (type === "academic") {
+	    return function (d) {
+		var isCollision = isDateCollision(d, resume.degrees);
+		return boxOffset(d) - (isCollision ? academicYOffset : 0);
 	    };
 	}
 
@@ -259,14 +322,15 @@
     };
 
     timeline.selectAll('.timeline')
-	.data(resume.academicExperience)
+	.data(resume.academicExperience.concat(resume.degrees))
 	.enter()
 	.append('rect')
 	.attr('class', 'timeline-academic-experience')
 	.attr('x', boxX)
 	.attr('y', boxY("academic"))
 	.attr('width', boxWidth)
-	.attr('height', boxHeight);
+	.attr('height', boxHeight)
+	.text(function (d) { return d.title || d.degree; });
 
     timeline.selectAll('.timeline')
 	.data(resume.professionalExperience)
