@@ -1,0 +1,3 @@
+* Resources
+
+  https://github.com/glena/d3-resume
