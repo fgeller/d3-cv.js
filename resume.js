@@ -2,12 +2,18 @@
 (function () {
 
     var entries = [
-	
-
 	{ // Abi
 	    type: "academic",
 	    start: new Date("1994-09-01"),
 	    end: new Date("2003-06-01"),
+	    degree: "Abitor",
+	    institution: "Gymnasium",
+	    location: "Bad Königshofen",
+	},
+	{ // Zivi
+	    type: "academic",
+	    start: new Date("2003-09-01"),
+	    end: new Date("2004-06-01"),
 	    degree: "Abitor",
 	    institution: "Gymnasium",
 	    location: "Bad Königshofen",
@@ -105,7 +111,7 @@
 
     var timeline = container.append("svg");
     var margin = {top: 20, right: 20, bottom: 10, left:10},
-	width = 1000,
+	width = 2000,
 	height = 150;
 
     timeline.attr("class", "timeline");
@@ -124,9 +130,9 @@
 	.scale(scale)
 	.orient('bottom')
 	.ticks(d3.time.years, 1)
-	.tickFormat(d3.time.format('%Y'))
-	.tickPadding(5)
-	.tickSize(3, 0);
+	.tickFormat(d3.time.format("'%y"))
+	.tickPadding(7)
+	.tickSize(5, 0);
 
     var timelineHeight = height / 1.618;
 
@@ -156,15 +162,7 @@
 	return scale(d.end) - scale(d.start);
     };
     var boxHeight = function (d) {
-	var preferredHeight = 20;
-
-	if (!d) {
-	    return preferredHeight;
-	}
-
-	if (isDateCollision(d) && d.type === "professional") {
-	    return preferredHeight / 2;
-	}
+	var preferredHeight = 40;
 
 	return preferredHeight;
     };
@@ -181,7 +179,7 @@
 	    return timelineHeight - professionalYOffset - boxHeight(d);
 	}
 
-	return timelineHeight - boxHeight(d);
+	return timelineHeight - boxHeight(d) - 2;
     };
 
     timeline.selectAll('.timeline')
