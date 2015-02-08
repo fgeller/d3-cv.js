@@ -1,117 +1,4 @@
-drawResume = function (resume) {
-    var preferredBoxHeight = 20;
-    var pixelsForTimeline = 3000;
-    var highlightColor = "#f1c40f";
-
-    var resume = {
-	name: "Donald Duck",
-	summary: "Experienced functional programmer with love for immutability. Happy uncle of three.",
-	email: "donald@example.com",
-	github: "https://github.com/",
-	linkedin: "https://www.linkedin.com/",
-	professionalExperience: [
-	    {
-		start: new Date("2012-12-01"),
-		title: "Senior Manager",
-		role: "Full-time",
-		company: "ACME",
-		location: "New York, US",
-		summary: [
-		    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-		    "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-		    "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-		    "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-		    "Technologies include American, APL, Javascript, Ruby.",
-		],
-	    },
-	    {
-		start: new Date("2008-01-11"),
-		end: new Date("2012-11-10"),
-		title: "Manager",
-		role: "Full-time",
-		company: "Wooden Sand",
-		location: "Edinburgh, UK",
-		summary: [
-		    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-		    "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-		    "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-		    "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-		    "Technologies included Scottish, Algol, PHP, R.",
-		],
-	    },
-	    {
-		start: new Date("2007-03-01"),
-		end: new Date("2008-01-09"),
-		title: "Senior Software Engineer",
-		role: "Internship",
-		company: "Blue Sky",
-		location: "Paris, FR",
-		summary: [
-		    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-		    "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-		    "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-		    "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-		    "Technologies included French, B, Perl, C++.",
-		],
-	    },
-	    {
-		start: new Date("2005-11-11"),
-		end: new Date("2007-01-15"),
-		title: "Software Engineer",
-		role: "Part-time",
-		company: "The First",
-		location: "Berlin, D",
-		summary: [
-		    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-		    "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-		    "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-		    "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-		    "Technologies included German, Fortran, Simula, Smalltalk.",
-		],
-	    },
-	],
-	degrees: [
-	    {
-		start: new Date("2004-01-01"),
-		end: new Date("2007-01-01"),
-		institution: "The Graduate School",
-		degree: "Master of Science",
-		summary: ["All distinctions in Chemical Science"],
-		location: "San Diego, US",
-	    },
-	    {
-		start: new Date("2000-08-01"),
-		end: new Date("2003-10-01"),
-		degree: "Bachelor of Science  ",
-		summary: ["Some Distinction in Computer Science"],
-		institution: "The Undergraduate School",
-		location: "Philadelphia, USA",
-	    },
-	],
-	academicExperience: [
-	    {
-		start: new Date("2001-10-01"),
-		end: new Date("2002-03-31"),
-		title: "Teaching Assistant",
-		institution: "The Undergraduate School",
-		location: "Philadelphia, USA",
-	    },
-	],
-    };
-
-    var container = d3.select("#resume-container");
-
-    var description = container.append("div");
-    description.attr('class', 'description');
-    // description.style('margin-bottom', '100px');  // timeline height
-    description.style('height', (window.innerHeight - 90 - 20) + 'px');
-    description.style('overflow', 'scroll');
-    // timeline height
-
-    var monthYearFormat = d3.time.format("%m/%Y");
-
-    /* ----- HEADER ------ */
-
+var drawHeader = function (config, resume) {
     var headerDescription = function () {
 	var html = '';
 	html += '<div class="pure-g">'
@@ -152,15 +39,33 @@ drawResume = function (resume) {
 	return html;
     };
 
-    var header = description
-	.append('div')
-	.attr('class', 'description-section');
+    var header = d3.select("#" + config.descriptionId)
 
-    // TODO: not sure why i need this selectAll vs select vs just description
     header
-    	.append('div')
-    	.attr('class', 'description-header')
+	.append('div')
+	.attr('class', 'description-section')
 	.html(headerDescription);
+};
+
+drawResume = function (resume) {
+    var config = {
+	preferredBoxHeight: 20,
+	pixelsForTimeline: 3000,
+	highlightColor: "#f1c40f",
+	containerId: "resume-container",
+	descriptionId: "resume-description",
+	monthYearFormat: d3.time.format("%m/%Y"),
+    };
+
+    var container = d3.select("#" + config.containerId);
+
+    var description = container.append("div");
+    description.attr('id', config.descriptionId);
+    description.style('height', (window.innerHeight - 90 - 20) + 'px');
+    description.style('overflow', 'scroll');
+
+    drawHeader(config, resume);
+
 
     /* ----- PROFESSIONAL EXPERIENCE ------ */
 
@@ -181,8 +86,8 @@ drawResume = function (resume) {
 
 	html += '<div class="pure-u-4-24">'
 	html += '<div class="description-professional-experience-dates">';
-	html += '<span class="description-professional-date-start">' + monthYearFormat(d.start) + '</span>';
-	html += '—<span class="description-professional-date-end">' + (d.end ? monthYearFormat(d.end) : 'present') + '</span>';
+	html += '<span class="description-professional-date-start">' + config.monthYearFormat(d.start) + '</span>';
+	html += '—<span class="description-professional-date-end">' + (d.end ? config.monthYearFormat(d.end) : 'present') + '</span>';
 	html += '</div>';
 	html += '</div>';
 
@@ -242,8 +147,8 @@ drawResume = function (resume) {
 
 	html += '<div class="pure-u-4-24">'
 	html += '<div class="description-education-degree-dates">';
-	html += '<span class="description-education-degree-start">' + monthYearFormat(d.start) + '</span>';
-	html += '—<span class="description-education-degree-end">' + (d.end ? monthYearFormat(d.end) : 'present') + '</span>';
+	html += '<span class="description-education-degree-start">' + config.monthYearFormat(d.start) + '</span>';
+	html += '—<span class="description-education-degree-end">' + (d.end ? config.monthYearFormat(d.end) : 'present') + '</span>';
 	html += '</div>';
 	html += '</div>';
 	html += '</div>';
@@ -298,8 +203,8 @@ drawResume = function (resume) {
 
 	html += '<div class="pure-u-4-24">'
 	html += '<div class="description-academic-experience-dates">';
-	html += '<span class="description-academic-experience-start">' + monthYearFormat(d.start) + '</span>';
-	html += '—<span class="description-academic-experience-end">' + (d.end ? monthYearFormat(d.end) : 'present') + '</span>';
+	html += '<span class="description-academic-experience-start">' + config.monthYearFormat(d.start) + '</span>';
+	html += '—<span class="description-academic-experience-end">' + (d.end ? config.monthYearFormat(d.end) : 'present') + '</span>';
 	html += '</div>';
 	html += '</div>';
 	html += '</div>';
@@ -366,7 +271,7 @@ drawResume = function (resume) {
 	}
 
 	d3.select(descriptionEntry)
-	    .style("background", highlightColor)
+	    .style("background", config.highlightColor)
     };
 
     var unhighlightDescriptionEntry = function (d) {
@@ -386,7 +291,7 @@ drawResume = function (resume) {
 
     var timeline = timelineContainer.append("svg");
     var margin = {top: 20, right: 20, bottom: 10, left:10},
-	width = pixelsForTimeline,
+	width = config.pixelsForTimeline,
 	height = 90;
 
     timeline.attr("class", "timeline");
@@ -437,7 +342,7 @@ drawResume = function (resume) {
     };
 
     var boxHeight = function (d) {
-	return preferredBoxHeight;
+	return config.preferredBoxHeight;
     };
 
     var boxX = function (d) {
@@ -495,5 +400,5 @@ drawResume = function (resume) {
 	.on('mouseout', unhighlightDescriptionEntry)
     ;
 
-    d3.select(".timeline-container").property("scrollLeft", pixelsForTimeline);
+    d3.select(".timeline-container").property("scrollLeft", config.pixelsForTimeline);
 };
