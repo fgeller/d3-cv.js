@@ -134,10 +134,6 @@ drawResume = function (resume) {
     drawHeader(config, resume);
     drawProfessionalExperience(config, resume);
 
-
-    /* ----- PROFESSIONAL EXPERIENCE ------ */
-
-
     /* ----- EDUCATION ------ */
 
     var education = description
