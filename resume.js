@@ -405,6 +405,15 @@ var drawTimeline = function (config, resume) {
     d3.select("#" + config.timelineContainerId).property("scrollLeft", config.timelineWidth);
 }
 
+var drawDescription = function (config, resume) {
+    d3.select("#" + config.containerId)
+	.append("div")
+	.attr('id', config.descriptionId)
+	.style('width', config.containerWidth)
+	.style('height', (window.innerHeight - 90 - 20) + 'px'); // TODO: magic!
+    ;
+};
+
 drawResume = function (resume) {
     var config = {
 	preferredBoxHeight: 20,
@@ -419,14 +428,7 @@ drawResume = function (resume) {
 	monthYearFormat: d3.time.format("%m/%Y"),
     };
 
-    var container = d3.select("#" + config.containerId);
-
-    var description = container.append("div")
-	.attr('id', config.descriptionId)
-	.style('width', config.containerWidth)
-	.style('height', (window.innerHeight - 90 - 20) + 'px'); // TODO: magic!
-    ;
-
+    drawDescription(config, resume);
     drawHeader(config, resume);
     drawProfessionalExperience(config, resume);
     drawEducation(config, resume);
