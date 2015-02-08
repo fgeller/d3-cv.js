@@ -1,50 +1,57 @@
+var line = function (contents) {
+    var html = '';
+    html += '<div class="pure-g">'
+    html += contents;
+    html += '</div>';
+
+    return html;
+};
+
+var column = function (num, denom, contents) {
+    var html = '';
+    html += '<div class="pure-u-' + num + '-' + denom + '">';
+    html += contents;
+    html += '</div>';
+
+    return html;
+};
+
+var div = function (klass, contents) {
+    return '<div class="' + klass + '">' + contents + '</div>';
+}
+
+var headerDescription = function (config, resume) {
+    var name = '<div class="description-header-name">' + resume.name + '</div>';
+
+    var email = div(
+	'description-header-email',
+	'<a href="mailto:' + resume.email + '"><i class="fa fa-envelope-square"></i></a>'
+    );
+
+    var linkedin = div(
+	'description-header-linkedin',
+	'<a href="' + resume.linkedin + '"><i class="fa fa-linkedin-square"></i></a>'
+    );
+
+    var github = div(
+	'description-header-github',
+	'<a href="' + resume.github + '"><i class="fa fa-github-square"></i></a>'
+    );
+
+    var summary = div('description-header-summary', resume.summary);
+
+    var links = line(column(8, 24, email) + column(8, 24, github) + column(8, 24, linkedin));
+    return (
+	line(column(20, 24, name) + column(4, 24, links)) +
+	    line(column(1, 1, summary))
+    );
+}
+
 var drawHeader = function (config, resume) {
-    var headerDescription = function () {
-	var html = '';
-	html += '<div class="pure-g">'
-	html += '<div class="pure-u-20-24">'
-	html += '<div class="description-header-name">';
-	html += resume.name;
-	html += '</div>';
-	html += '</div>';
-	html += '<div class="pure-u-4-24">'
-	html += '<div class="pure-g">'
-	html += '<div class="pure-u-8-24">'
-	html += '<div class="description-header-email">';
-	html += '<a href="mailto:' + resume.email + '"><i class="fa fa-envelope-square"></i></a>' ;
-	html += '</div>';
-	html += '</div>';
-	html += '<div class="pure-u-8-24">'
-	html += '<div class="description-header-linkedin">';
-	html += '<a href="' + resume.linkedin + '"><i class="fa fa-linkedin-square"></i></a>';
-	html += '</div>';
-	html += '</div>';
-	html += '<div class="pure-u-8-24">'
-	html += '<div class="description-header-github">';
-	html += '<a href="' + resume.github + '"><i class="fa fa-github-square"></i></a>' ;
-	html += '</div>';
-	html += '</div>';
-	html += '</div>';
-	html += '</div>';
-	html += '</div>';
-
-	html += '<div class="pure-g">'
-	html += '<div class="pure-u-1">'
-	html += '<div class="description-header-summary">';
-	html += resume.summary;
-	html += '</div>';
-	html += '</div>';
-	html += '</div>';
-
-	return html;
-    };
-
     var header = d3.select("#" + config.descriptionId)
-
-    header
 	.append('div')
 	.attr('class', 'description-section')
-	.html(headerDescription);
+	.html(headerDescription(config, resume));
 };
 
 drawResume = function (resume) {
