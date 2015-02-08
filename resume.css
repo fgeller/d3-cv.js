@@ -9,7 +9,7 @@ a {
 }
 
 a:hover {
-    color: #d35400;
+    color: #f1c40f;
     text-decoration: none;
 }
 
@@ -20,8 +20,8 @@ a:hover {
 }
 
 .timeline {
-    font-family: 'EB Garamond', sans-serif;
-    font-size: 12pt;
+    font-family: 'EB Garamond';
+    font-size: 13pt;
     font-weight: 400;
     fill: #000;
 }
@@ -52,16 +52,16 @@ a:hover {
 }
 
 .description-header-name {
-    font-family: 'Raleway';
+    font-family: Raleway;
     font-weight: 100;
-    font-size: 42pt;
+    font-size: 48pt;
     text-transform: uppercase;
     color: #27ae60;
 }
 
 .description-header-summary {
     font-family: 'EB Garamond';
-    font-size: 14pt;
+    font-size: 13pt;
 }
 
 .description-header-email {
@@ -78,18 +78,18 @@ a:hover {
 
 .description-professional-experience {
     font-family: 'EB Garamond';
-    font-size: 14pt;
+    font-size: 13pt;
     padding: .2em;
 }
 
 .description-professional-experience .pure-g {
     font-family: 'EB Garamond';
-    font-size: 14pt;
+    font-size: 13pt;
 }
 
 .description-professional-experience div[class^="pure-u"] {
     font-family: 'EB Garamond';
-    font-size: 14pt;
+    font-size: 13pt;
 }
 
 .description-professional-experience-lines {
@@ -98,10 +98,10 @@ a:hover {
 
 .description-education-degree div[class^="pure-u"] {
     font-family: 'EB Garamond';
-    font-size: 14pt;
+    font-size: 13pt;
 }
 
 .description-academic-experience div[class^="pure-u"] {
     font-family: 'EB Garamond';
-    font-size: 14pt;
+    font-size: 13pt;
 }

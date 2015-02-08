@@ -1,6 +1,7 @@
 drawResume = function (resume) {
     var preferredBoxHeight = 20;
     var pixelsForTimeline = 3000;
+    var highlightColor = "#f1c40f";
 
     var resume = {
 	name: "Donald Duck",
@@ -352,7 +353,7 @@ drawResume = function (resume) {
 	}
 
 	d3.select(descriptionEntry)
-	    .style("background", "#f1c40f")
+	    .style("background", highlightColor)
     };
 
     var unhighlightDescriptionEntry = function (d) {
