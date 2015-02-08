@@ -114,38 +114,9 @@ var drawProfessionalExperience = function (config, resume) {
 	.html(professionalExperienceDescription(config, resume));
 };
 
-drawResume = function (resume) {
-    var config = {
-	preferredBoxHeight: 20,
-	pixelsForTimeline: 3000,
-	highlightColor: "#f1c40f",
-	containerId: "resume-container",
-	descriptionId: "resume-description",
-	monthYearFormat: d3.time.format("%m/%Y"),
-    };
 
-    var container = d3.select("#" + config.containerId);
-
-    var description = container.append("div");
-    description.attr('id', config.descriptionId);
-    description.style('height', (window.innerHeight - 90 - 20) + 'px');
-    description.style('overflow', 'scroll');
-
-    drawHeader(config, resume);
-    drawProfessionalExperience(config, resume);
-
-    /* ----- EDUCATION ------ */
-
-    var education = description
-	.append('div')
-	.attr('class', 'description-section');
-
-    education
-        .append('div')
-        .attr('class', 'description-section-header')
-        .text('Education');
-
-    var educationDegreeDescription = function (d) {
+var educationDegreeDescription = function (config, resume) {
+    return function (d) {
 	var html = '';
 	html += '<div class="pure-g">'
 	html += '<div class="pure-u-20-24">'
@@ -178,30 +149,30 @@ drawResume = function (resume) {
 	);
 	html += '</div>';
 
-
 	return html;
-    };
+    }
+};
 
-    // TODO: not sure why i need this selectAll vs select vs just description
-    education.selectAll(".description")
+var drawEducation = function (config, resume) {
+    var education = d3.select("#" + config.descriptionId)
+	.append('div')
+	.attr('class', 'description-section');
+
+    education
+        .append('div')
+        .attr('class', 'description-section-header')
+        .text('Education');
+
+    education.selectAll()
     	.data(resume.degrees)
     	.enter()
     	.append('div')
     	.attr('class', 'description-education-degree')
-	.html(educationDegreeDescription);
+	.html(educationDegreeDescription(config, resume));
+};
 
-    /* ----- ACADEMIC EXPERIENCE ------ */
-
-    var academicExperience = description
-	.append('div')
-	.attr('class', 'description-section');
-
-    academicExperience
-        .append('div')
-        .attr('class', 'description-section-header')
-        .text('Academic Experience');
-
-    var academicExperienceDescription = function (d) {
+var academicExperienceDescription = function (config, resume) {
+    return function (d) {
 	var html = '';
 	html += '<div class="pure-g">'
 	html += '<div class="pure-u-20-24">'
@@ -221,15 +192,51 @@ drawResume = function (resume) {
 	html += '</div>';
 
 	return html;
-    };
+    }
+};
 
-    // TODO: not sure why i need this selectAll vs select vs just description
-    academicExperience.selectAll(".description")
+
+
+var drawAcademicExperience = function (config, resume) {
+
+    var academicExperience = d3.select("#" + config.descriptionId)
+	.append('div')
+	.attr('class', 'description-section');
+
+    academicExperience
+        .append('div')
+        .attr('class', 'description-section-header')
+        .text('Academic Experience');
+
+    academicExperience.selectAll()
     	.data(resume.academicExperience)
     	.enter()
     	.append('div')
     	.attr('class', 'description-academic-experience')
-	.html(academicExperienceDescription);
+	.html(academicExperienceDescription(config, resume));
+};
+
+drawResume = function (resume) {
+    var config = {
+	preferredBoxHeight: 20,
+	pixelsForTimeline: 3000,
+	highlightColor: "#f1c40f",
+	containerId: "resume-container",
+	descriptionId: "resume-description",
+	monthYearFormat: d3.time.format("%m/%Y"),
+    };
+
+    var container = d3.select("#" + config.containerId);
+
+    var description = container.append("div");
+    description.attr('id', config.descriptionId);
+    description.style('height', (window.innerHeight - 90 - 20) + 'px');
+    description.style('overflow', 'scroll');
+
+    drawHeader(config, resume);
+    drawProfessionalExperience(config, resume);
+    drawEducation(config, resume);
+    drawAcademicExperience(config, resume);
 
     /* ----- TIMELINE ------ */
 
