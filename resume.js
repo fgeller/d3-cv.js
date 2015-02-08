@@ -258,34 +258,6 @@ drawResume = function (resume) {
 	)[0][0];  // why oh why?
     };
 
-    var headerDescription = function () {
-	var name = '<div class="description-header-name">' + resume.name + '</div>';
-
-	var email = div(
-	    'description-header-email',
-	    '<a href="mailto:' + resume.email + '"><i class="fa fa-envelope-square"></i></a>'
-	);
-
-	var linkedin = div(
-	    'description-header-linkedin',
-	    '<a href="' + resume.linkedin + '"><i class="fa fa-linkedin-square"></i></a>'
-	);
-
-	var github = div(
-	    'description-header-github',
-	    '<a href="' + resume.github + '"><i class="fa fa-github-square"></i></a>'
-	);
-
-	var summary = div('description-header-summary', resume.summary);
-
-	var links = line(column(8, 24, email) + column(8, 24, github) + column(8, 24, linkedin));
-	return (
-	    line(column(20, 24, name) + column(4, 24, links)) +
-	    line(column(1, 1, summary))
-	);
-    };
-
-
     function scrollDescriptionTween(original, offset) {
 	return function() {
 	    var i = d3.interpolateNumber(0, offset);
