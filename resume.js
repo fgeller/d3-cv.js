@@ -2,153 +2,97 @@
 (function () {
 
     var resume = {
+	name: "Donald Duck",
+	summary: "Experienced functional programmer with love for immutability. Happy uncle of three.",
+	email: "donald@example.com",
+	github: "https://github.com/",
+	linkedin: "https://www.linkedin.com/",
 	professionalExperience: [
 	    {
-		start: new Date("2012-12-10"),
+		start: new Date("2012-12-01"),
+		title: "Senior Manager",
+		role: "Full-time",
+		company: "ACME",
+		location: "New York, US",
+		summary: [
+		    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+		    "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+		    "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+		    "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+		    "Technologies include American, APL, Javascript, Ruby.",
+		],
+	    },
+	    {
+		start: new Date("2008-01-11"),
+		end: new Date("2012-11-10"),
+		title: "Manager",
+		role: "Full-time",
+		company: "Wooden Sand",
+		location: "Edinburgh, UK",
+		summary: [
+		    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+		    "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+		    "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+		    "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+		    "Technologies included Scottish, Algol, PHP, R.",
+		],
+	    },
+	    {
+		start: new Date("2007-03-01"),
+		end: new Date("2008-01-09"),
+		title: "Senior Software Engineer",
+		role: "Internship",
+		company: "Blue Sky",
+		location: "Paris, FR",
+		summary: [
+		    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+		    "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+		    "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+		    "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+		    "Technologies included French, B, Perl, C++.",
+		],
+	    },
+	    {
+		start: new Date("2005-11-11"),
+		end: new Date("2007-01-15"),
 		title: "Software Engineer",
-		role: "Full-time",
-		company: "Movio Ltd.",
-		location: "Auckland, NZ",
-		summary: [
-		    "Technologies include Scala, Java, akka, Apache Cassandra.",
-		],
-	    },
-	    {
-		start: new Date("2011-09-01"),
-		end: new Date("2012-10-30"),
-		title: "Software Developer",
-		role: "Full-time",
-		company: "IPTEGO GmbH",
-		location: "Berlin, D",
-		summary: [
-		    "Developed a learning, multi-process software to detect and prevent fraudulent use of VoIP networks.",
-		    "Independently designed and developed web application for monitoring, inspection and configuration.",
-		    "Technologies included Python, Redis, Flask, SQLAlchemy, ExtJS, ZMQ, Javascript.",
-		],
-	    },
-	    {
-		start: new Date("2011-02-01"),
-		end: new Date("2011-04-30"),
-		title: "Software Developer",
-		role: "Internship",
-		company: "SAP Labs",
-		location: "Palo Alto, CA",
-		summary: [
-		    "Developed compiler-frontend and AST transformer for research database access language.",
-		    "Technologies included the <a href='http://www.newspeaklanguage.org/'>Newspeak</a> programming language and Javascript.",
-		],
-	    },
-	    {
-		start: new Date("2008-11-01"),
-		end: new Date("2010-02-28"),
-		title: "Software Developer",
 		role: "Part-time",
-		company: "Finn GmbH",
+		company: "The First",
 		location: "Berlin, D",
 		summary: [
-		    "Transformation of semi-structured dictionary data for optimized search access on pons.eu.",
-		    "Developed web application interface for community-driven dictionary.",
-		    "Technologies included XSLT, JEE, Ruby on Rails and Javascript.",
-		],
-	    },
-	    {
-		start: new Date("2008-03-01"),
-		end: new Date("2008-09-30"),
-		title: "Software Developer",
-		role: "Internship",
-		company: "SAP Research",
-		location: "St. Gallen, CH",
-		summary: [
-		    "Developed a mobile phone application to enable end-user access to SAP business services.",
-		    "Developed an OASIS standard-compliant web-service messaging component to integrate SAP services.",
-		    "Technologies included SAP’s Netweaver JEE (JAX-WS, JAXB, etc.) and Google’s Android platforms.",
-		],
-	    },
-	    {
-		start: new Date("2005-03-01"),
-		end: new Date("2006-03-30"),
-		title: "Web Developer",
-		role: "Working student",
-		company: "Worcester Polytechnic Institute",
-		location: "Worcester, USA",
-		summary: [
-		    "Developed web based interface for managing sensor readings from fire safety experiments.",
-		    "Technologies included Apache Tomcat, Java Servlets, JSP and Oracle Database.",
-		],
-	    },
-	    {
-		start: new Date("2003-09-01"),
-		end: new Date("2004-06-01"),
-		title: "Zivildienstleistender",
-		company: "Bayrisches Rotes Kreuz",
-		location: "Bad Neustadt an der Saale, D",
-		summary: [
-		    "Assisted transport as community service.",
-		],
-	    },
-	    {
-		start: new Date("2003-07-01"),
-		end: new Date("2003-08-31"),
-		title: "Software Developer",
-		role: "Internship",
-		company: "Charles River Laboratories",
-		location: "Wilmington, USA",
-		summary: [
-		    "Designed and implemented a phone directory with support for user-level privileges.",
-		    "Technologies included Apache Tomcat, Java Servlets, JSP, MS SQL Database and MS Access.",
+		    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+		    "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+		    "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+		    "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+		    "Technologies included German, Fortran, Simula, Smalltalk.",
 		],
 	    },
 	],
 	degrees: [
-	    { // M.Sc.
-		start: new Date("2007-10-01"),
-		end: new Date("2010-04-01"),
-		institution: "Hasso Plattner Institut",
+	    {
+		start: new Date("2004-01-01"),
+		end: new Date("2007-01-01"),
+		institution: "The Graduate School",
 		degree: "Master of Science",
-		distinction: "(Outstanding)",
-		concentration: "in IT-Systems Engineering",
-		location: "Potsdam, D",
+		summary: ["All distinctions in Chemical Science"],
+		location: "San Diego, US",
 	    },
-	    { // B.Sc.
-		start: new Date("2004-08-01"),
-		end: new Date("2007-05-01"),
-		degree: "Bachelor of Science",
-		distinction: "(High Distinction)",
-		concentration: "in Computer Science",
-		institution: "Worcester Polytechnic Institute",
-		location: "Worcester, USA",
-	    },
-	    { // Abi
-		start: new Date("1994-09-01"),
-		end: new Date("2003-06-01"),
-		degree: "Abitur",
-		distinction: "(Good)",
-		concentration: "with Honors Courses in Mathematics and Physics",
-		institution: "Gymnasium",
-		location: "Bad Königshofen im Grabfeld, D",
+	    {
+		start: new Date("2000-08-01"),
+		end: new Date("2003-10-01"),
+		degree: "Bachelor of Science  ",
+		summary: ["Some Distinction in Computer Science"],
+		institution: "The Undergraduate School",
+		location: "Philadelphia, USA",
 	    },
 	],
 	academicExperience: [
-	    { // TA @HPI.
-		start: new Date("2009-10-01"),
-		end: new Date("2010-03-31"),
+	    {
+		start: new Date("2001-10-01"),
+		end: new Date("2002-03-31"),
 		title: "Teaching Assistant",
-		institution: "Hasso Plattner Institut",
-		location: "Potsdam, D",
-	    },
-	    { // RA @Brown.
-		start: new Date("2006-07-01"),
-		end: new Date("2006-08-31"),
-		title: "Resarch Assistant",
-		institution: "Brown University",
-		location: "Providence, USA",
-	    },
-	    { // Ph.D.
-		start: new Date("2010-04-01"),
-		end: new Date("2011-02-01"),
-		title: "Ph.D. Candidate",
-		institution: "Hasso Plattner Institut",
-		location: "Potsdam, D",
+		institution: "The Undergraduate School",
+		location: "Philadelphia, USA",
 	    },
 	],
     };
@@ -160,6 +104,39 @@
     description.style('margin-bottom', '200px');  // timeline height
 
     var monthYearFormat = d3.time.format("%m/%Y");
+
+    /* ----- HEADER ------ */
+
+    var headerDescription = function () {
+	var html = '';
+	html += '<div class="description-header-name">';
+	html += resume.name;
+	html += '</div>';
+	html += '<div class="description-header-email">';
+	html += '<a href="mailto:' + resume.email + '"><i class="fa fa-envelope-square"></i></a>' ;
+	html += '</div>';
+	html += '<div class="description-header-linkedin">';
+	html += '<a href="' + resume.linkedin + '"><i class="fa fa-linkedin-square"></i></a>';
+	html += '</div>';
+	html += '<div class="description-header-github">';
+	html += '<a href="' + resume.github + '"><i class="fa fa-github-square"></i></a>' ;
+	html += '</div>';
+	html += '<div class="description-header-summary">';
+	html += resume.summary;
+	html += '</div>';
+
+	return html;
+    };
+
+    var header = description
+	.append('div')
+	.attr('class', 'description-section');
+
+    // TODO: not sure why i need this selectAll vs select vs just description
+    header
+    	.append('div')
+    	.attr('class', 'description-header')
+	.html(headerDescription);
 
     /* ----- PROFESSIONAL EXPERIENCE ------ */
 
@@ -197,7 +174,7 @@
 
     professionalExperience
         .append('div')
-        .attr('class', 'description-header')
+        .attr('class', 'description-section-header')
         .text('Professional Experience');
 
     // TODO: not sure why i need this selectAll vs select vs just description
@@ -216,7 +193,7 @@
 
     education
         .append('div')
-        .attr('class', 'description-header')
+        .attr('class', 'description-section-header')
         .text('Education');
 
     var educationDegreeDescription = function (d) {
@@ -252,7 +229,7 @@
 
     academicExperience
         .append('div')
-        .attr('class', 'description-header')
+        .attr('class', 'description-section-header')
         .text('Academic Experience');
 
     var academicExperienceDescription = function (d) {
