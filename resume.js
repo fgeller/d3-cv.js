@@ -279,7 +279,13 @@
 
     /* ----- TIMELINE ------ */
 
-    var timeline = container.append("svg");
+    var timelineContainer = container.append('div')
+	.attr("class", "timeline-container")
+	.style("width", "960px")
+	.style("overflow", "scroll")
+    ;
+
+    var timeline = timelineContainer.append("svg");
     var margin = {top: 20, right: 20, bottom: 10, left:10},
 	width = 2000,
 	height = 150;
@@ -386,5 +392,7 @@
 	.attr('y', boxY("professional"))
 	.attr('width', boxWidth)
 	.attr('height', boxHeight);
+
+    d3.select(".timeline-container").property("scrollLeft", 2000);
 
 })();
