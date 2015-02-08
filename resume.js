@@ -180,7 +180,7 @@ drawResume = function (resume) {
 	html += '</div>';
 
 	html += '<div class="pure-u-4-24">'
-	html += '<div class="description-professional-experience-date">';
+	html += '<div class="description-professional-experience-dates">';
 	html += '<span class="description-professional-date-start">' + monthYearFormat(d.start) + '</span>';
 	html += '—<span class="description-professional-date-end">' + (d.end ? monthYearFormat(d.end) : 'present') + '</span>';
 	html += '</div>';
@@ -236,8 +236,6 @@ drawResume = function (resume) {
 	html += '<div class="description-education-degree-summary">';
 	html += '<span class="description-education-degree-title">' + d.degree + '</span>';
 	html += ' at <span class="description-education-degree-institution">' + d.institution + '</span>';
-	html += ' <span class="description-education-degree-distinction">' + d.distinction + '</span>';
-	html += ' <span class="description-education-degree-concentration">' + d.concentration + '</span>';
 	html += ', <span class="description-education-degree-location">' + d.location + '</span>';
 	html += '</div>';
 	html += '</div>';
@@ -249,6 +247,21 @@ drawResume = function (resume) {
 	html += '</div>';
 	html += '</div>';
 	html += '</div>';
+
+	html += '<div class="description-education-degree-lines">'
+	d.summary.forEach(
+	    function(line) {
+		html += '<div class="pure-g">';
+		html += '<div class="pure-u-1">';
+		html += '<div class="description-education-degree-line">';
+		html += line;
+		html += '</div>';
+		html += '</div>';
+		html += '</div>';
+	    }
+	);
+	html += '</div>';
+
 
 	return html;
     };

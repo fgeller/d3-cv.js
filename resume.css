@@ -76,6 +76,10 @@ a:hover {
     font-size: 32pt;
 }
 
+.description-professional-experience-dates {
+    text-align: right;
+}
+
 .description-professional-experience {
     font-family: 'EB Garamond';
     font-size: 13pt;
@@ -96,9 +100,30 @@ a:hover {
     margin-left: 1em;
 }
 
+
+.description-education-degree {
+    padding: .2em;
+}
+
+.description-education-degree-dates {
+    text-align: right;
+}
+
 .description-education-degree div[class^="pure-u"] {
     font-family: 'EB Garamond';
     font-size: 13pt;
+}
+
+.description-education-degree-lines {
+    margin-left: 1em;
+}
+
+.description-academic-experience {
+    padding: .2em;
+}
+
+.description-academic-experience-dates {
+    text-align: right;
 }
 
 .description-academic-experience div[class^="pure-u"] {
