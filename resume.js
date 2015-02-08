@@ -216,14 +216,14 @@ var drawAcademicExperience = function (config, resume) {
 };
 
 
-function elementBottomOffset (el) {
+function elementBottomOffset (config, el) {
     var rect = el.getBoundingClientRect();
     var viewHeight = window.innerHeight || document.documentElement.clientHeight;
-    return rect.bottom - viewHeight + 90 + 20; // TODO magic!
+    return rect.bottom - viewHeight + config.timelineHeight + config.timelineMargin;
 }
 
-function elementTopOffset (el) {
-    return el.getBoundingClientRect().top - 20; // TODO magic!
+function elementTopOffset (config, el) {
+    return el.getBoundingClientRect().top - config.timelineMargin;
 }
 
 var findDescription = function (config, d) {
@@ -249,8 +249,8 @@ var scrollToDescriptionEntry = function (config, resume) {
     return function (d) {
 	var descriptionEntry = findDescription(config, d);
 	var originalScroll = d3.select("#" + config.descriptionId).property('scrollTop');
-	var descriptionBottomOffset = elementBottomOffset(descriptionEntry);
-	var descriptionTopOffset = elementTopOffset(descriptionEntry);
+	var descriptionBottomOffset = elementBottomOffset(config, descriptionEntry);
+	var descriptionTopOffset = elementTopOffset(config, descriptionEntry);
 
 	if (descriptionBottomOffset > 0) { // scroll up
 	    d3.transition()
@@ -415,11 +415,12 @@ var drawTimeline = function (config, resume) {
 }
 
 var drawDescription = function (config, resume) {
+    var height = window.innerHeight - config.timelineMargin - config.timelineMargin;
     d3.select("#" + config.containerId)
 	.append("div")
 	.attr('id', config.descriptionId)
 	.style('width', config.containerWidth)
-	.style('height', (window.innerHeight - 90 - 20) + 'px'); // TODO: magic!
+	.style('height', height + 'px');
     ;
 };
 
@@ -427,6 +428,7 @@ drawResume = function (resume) {
     var config = {
 	preferredBoxHeight: 20,
         containerWidth: d3.select("#resume-container").property("clientWidth"),
+	timelineMargin: 20,
 	timelineWidth: 3000,
 	timelineHeight: 90,
 	highlightColor: "#f1c40f",
