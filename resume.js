@@ -491,13 +491,3 @@
     d3.select(".timeline-container").property("scrollLeft", 2000);
 
 })();
-
-// 	.on('mouseover', function(d){
-// graphContainer.selectAll("path.item").transition()
-// .attr("stroke-width", "1")
-// .attr("fill-opacity", .2);
-// d3.select(this).transition()
-// .attr("stroke-width", "2")
-// .attr("fill-opacity", 1);
-// showInfo(svg, className, d);
-// })
