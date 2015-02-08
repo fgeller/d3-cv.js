@@ -157,7 +157,10 @@
 
     var description = container.append("div");
     description.attr('class', 'description');
+
     var monthYearFormat = d3.time.format("%m/%Y");
+
+    /* ----- PROFESSIONAL EXPERIENCE ------ */
 
     var professionalExperienceDescription = function (d) {
 	var html = '';
@@ -187,13 +190,17 @@
 	return html;
     };
 
-    description
+    var professionalExperience = description
+	.append('div')
+	.attr('class', 'description-section');
+
+    professionalExperience
         .append('div')
         .attr('class', 'description-header')
         .text('Professional Experience');
 
     // TODO: not sure why i need this selectAll vs select vs just description
-    description.selectAll(".description")
+    professionalExperience.selectAll(".description")
     	.data(resume.professionalExperience)
     	.enter()
     	.append('div')
@@ -202,7 +209,11 @@
 
     /* ----- EDUCATION ------ */
 
-    description
+    var education = description
+	.append('div')
+	.attr('class', 'description-section');
+
+    education
         .append('div')
         .attr('class', 'description-header')
         .text('Education');
@@ -225,7 +236,7 @@
     };
 
     // TODO: not sure why i need this selectAll vs select vs just description
-    description.selectAll(".description")
+    education.selectAll(".description")
     	.data(resume.degrees)
     	.enter()
     	.append('div')
