@@ -19,11 +19,23 @@ a:hover {
     shape-rendering: crispEdges;
 }
 
-.timeline {
+#resume-timeline {
     font-family: 'EB Garamond';
     font-size: 13pt;
     font-weight: 400;
     fill: #000;
+    background-color: #fff;
+}
+
+#resume-description {
+    overflow: scroll;
+}
+
+#timeline-container {
+    position: fixed;
+    bottom: 0;
+    overflow: scroll;
+    border-top: 3pt solid #ecf0f1;
 }
 
 .timeline-professional-experience {

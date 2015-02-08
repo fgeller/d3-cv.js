@@ -64,7 +64,8 @@ var professionalExperienceDescription = function (config, resume) {
 	    "description-professional-experience-summary",
 	    span("description-professional-experience-title", d.title) +
 		' — ' +
-		span("description-professional-experience-role", d.role) +
+		span("description-professional-experience-role", d.role || "") +
+		' at ' +
 		span("description-professional-experience-company", d.company) +
 		' in ' +
 		span('description-professional-experience-location', d.location)
@@ -79,7 +80,7 @@ var professionalExperienceDescription = function (config, resume) {
 
 	var header = div(
 	    "description-professional-experience-header",
-	    line(column(20, 24, summary), column(4, 24, dates))
+	    line(column(20, 24, summary) + column(4, 24, dates))
 	);
 
 	var lines = div(
@@ -230,7 +231,7 @@ var findDescription = function (config, d) {
 	function (div) {
 	    return div === d;
 	}
-    )[0][0];  // why oh why?
+    )[0][0]; // why oh why?
 };
 
 var scrollDescriptionTween = function (config, original, offset) {
@@ -275,58 +276,93 @@ var unhighlightDescriptionEntry = function (config, resume) {
     }
 };
 
-drawResume = function (resume) {
-    var config = {
-	preferredBoxHeight: 20,
-	pixelsForTimeline: 3000,
-	highlightColor: "#f1c40f",
-	containerId: "resume-container",
-	descriptionId: "resume-description",
-	monthYearFormat: d3.time.format("%m/%Y"),
+var isDateCollision = function (entry, others) {
+    var contains = function (entry, date) {
+	return date > entry.start && date < entry.end
     };
+
+    return others.some(
+	function (other) {
+	    return contains(other, entry.start) || contains(other, entry.end);
+	}
+    );
+};
+
+var timelineBoxWidth = function (scale) {
+    return function (d) {
+	if (!d.end) { // current one ends today
+	    return scale(new Date()) - scale(d.start);
+	}
+
+	return scale(d.end) - scale(d.start);
+    }
+};
+
+var timelineBoxX = function (scale) {
+    return function (d) {
+	return scale(d.start);
+    };
+};
+
+var timelineBoxY = function (config, type) {
+    var professionalCollisionOffset = timelineBoxHeight(config)() / 2;
+    var academicCollisionOffset = timelineBoxHeight(config)();
+
+    var boxOffset = function (d) {
+	return (config.timelineHeight / 1.618) - timelineBoxHeight(config)(d) - 2;
+    };
+
+    if (type === "professional") {
+	return function (d) {
+	    var isCollision = isDateCollision(d, resume.degrees);
+	    return boxOffset(d) - (isCollision ? professionalCollisionOffset : 0);
+	};
+    }
+
+    if (type === "academic") {
+	return function (d) {
+	    var isCollision = isDateCollision(d, resume.degrees);
+	    return boxOffset(d) - (isCollision ? academicCollisionOffset : 0);
+	};
+    }
+
+    return function (d) {
+	return boxOffset(d);
+    };
+};
+
+var timelineBoxHeight = function (config) {
+    return function (d) {
+	return config.preferredBoxHeight;
+    }
+};
+
+var drawTimeline = function (config, resume) {
+    var width = config.timelineWidth;
+    var height = config.timelineHeight;
 
     var container = d3.select("#" + config.containerId);
 
-    var description = container.append("div");
-    description.attr('id', config.descriptionId);
-    description.style('height', (window.innerHeight - 90 - 20) + 'px');
-    description.style('overflow', 'scroll');
-
-    drawHeader(config, resume);
-    drawProfessionalExperience(config, resume);
-    drawEducation(config, resume);
-    drawAcademicExperience(config, resume);
-
-    /* ----- TIMELINE ------ */
-
     var timelineContainer = container.append('div')
-	.attr("class", "timeline-container")
-	.style("width", "960px")
-	.style("height", "90px")
-	.style("position", "fixed")
-	.style("bottom", 0)
-	.style("overflow", "scroll")
-	.style("border-top", "3pt solid #ecf0f1")
+	.attr("id", config.timelineContainerId)
+	.style("width", config.containerWidth + "px")
+	.style("height", config.timelineHeight + "px")
     ;
 
-    var timeline = timelineContainer.append("svg");
-    var margin = {top: 20, right: 20, bottom: 10, left:10},
-	width = config.pixelsForTimeline,
-	height = 90;
+    var timeline = timelineContainer.append("svg")
+	.attr("id", config.timelineId)
+	.attr("width", width + "px")
+	.attr("height", height + "px")
+    ;
 
-    timeline.attr("class", "timeline");
-    timeline.attr("width", width + "px");
-    timeline.attr("height", height + "px");
-    timeline.style("background-color", "white");
-
-    var startDate = new Date("1994-01-01");
+    var startDate = new Date("1994-01-01"); // TODO: find smallest date
     var endDate = new Date();
 
     var scale = d3.time.scale()
-    scale.domain([startDate, endDate]);
-    scale.range([margin.left, width - margin.right]);
+	.domain([startDate, endDate])
+	.range([0, width]);
 
-    var line = d3.svg.axis()
+    var axis = d3.svg.axis()
 	.scale(scale)
 	.orient('bottom')
 	.ticks(d3.time.years, 1)
@@ -334,75 +370,20 @@ drawResume = function (resume) {
 	.tickPadding(7)
 	.tickSize(5, 0);
 
-    var timelineHeight = height / 1.618;
-
     timeline.append('g')
-    	.attr('transform', 'translate(0, ' + (height/1.618) + ')')
-    	.attr('class', 'x axis')
-    	.call(line);
-
-    var isDateCollision = function (entry, others) {
-	var contains = function (entry, date) {
-	    return date > entry.start && date < entry.end
-	};
-
-	return others.some(
-	    function (other) {
-		return contains(other, entry.start) || contains(other, entry.end);
-	    }
-	);
-    };
-
-    var boxWidth = function (d) {
-	if (!d.end) { // current one ends today
-	    return scale(new Date()) - scale(d.start);
-	}
-
-	return scale(d.end) - scale(d.start);
-    };
-
-    var boxHeight = function (d) {
-	return config.preferredBoxHeight;
-    };
-
-    var boxX = function (d) {
-	return scale(d.start);
-    };
-    var professionalYOffset = boxHeight() / 2;
-    var academicYOffset = boxHeight();
-    var boxY = function (type) {
-	var boxOffset = function (d) {
-	    return timelineHeight - boxHeight(d) - 2;
-	};
-
-	if (type === "professional") {
-	    return function (d) {
-		var isCollision = isDateCollision(d, resume.degrees);
-		return boxOffset(d) - (isCollision ? professionalYOffset : 0);
-	    };
-	}
-
-	if (type === "academic") {
-	    return function (d) {
-		var isCollision = isDateCollision(d, resume.degrees);
-		return boxOffset(d) - (isCollision ? academicYOffset : 0);
-	    };
-	}
-
-	return function (d) {
-	    return boxOffset(d);
-	};
-    };
+    	.attr('transform', 'translate(0, ' + (height / 1.618) + ')')
+    	.attr('class', 'axis')
+    	.call(axis);
 
     timeline.selectAll('.timeline')
 	.data(resume.academicExperience.concat(resume.degrees))
 	.enter()
 	.append('rect')
 	.attr('class', 'timeline-academic-experience')
-	.attr('x', boxX)
-	.attr('y', boxY("academic"))
-	.attr('width', boxWidth)
-	.attr('height', boxHeight)
+	.attr('x', timelineBoxX(scale))
+	.attr('y', timelineBoxY(config, "academic"))
+	.attr('width', timelineBoxWidth(scale))
+	.attr('height', timelineBoxHeight(config))
 	.on('mouseover', scrollToDescriptionEntry(config, resume))
 	.on('mouseout', unhighlightDescriptionEntry(config, resume))
     ;
@@ -412,13 +393,43 @@ drawResume = function (resume) {
 	.enter()
 	.append('rect')
 	.attr('class', 'timeline-professional-experience')
-	.attr('x', boxX)
-	.attr('y', boxY("professional"))
-	.attr('width', boxWidth)
-	.attr('height', boxHeight)
+	.attr('x', timelineBoxX(scale))
+	.attr('y', timelineBoxY(config, "professional"))
+	.attr('width', timelineBoxWidth(scale))
+	.attr('height', timelineBoxHeight(config))
 	.on('mouseover', scrollToDescriptionEntry(config, resume))
 	.on('mouseout', unhighlightDescriptionEntry(config, resume))
     ;
 
-    d3.select(".timeline-container").property("scrollLeft", config.pixelsForTimeline);
+    // TODO: animate?
+    d3.select("#" + config.timelineContainerId).property("scrollLeft", config.timelineWidth);
+}
+
+drawResume = function (resume) {
+    var config = {
+	preferredBoxHeight: 20,
+        containerWidth: d3.select("#resume-container").property("clientWidth"),
+	timelineWidth: 3000,
+	timelineHeight: 90,
+	highlightColor: "#f1c40f",
+	containerId: "resume-container",
+	descriptionId: "resume-description",
+	timelineContainerId: "timeline-container",
+	timelineId: "resume-timeline",
+	monthYearFormat: d3.time.format("%m/%Y"),
+    };
+
+    var container = d3.select("#" + config.containerId);
+
+    var description = container.append("div")
+	.attr('id', config.descriptionId)
+	.style('width', config.containerWidth)
+	.style('height', (window.innerHeight - 90 - 20) + 'px'); // TODO: magic!
+    ;
+
+    drawHeader(config, resume);
+    drawProfessionalExperience(config, resume);
+    drawEducation(config, resume);
+    drawAcademicExperience(config, resume);
+    drawTimeline(config, resume);
 };
