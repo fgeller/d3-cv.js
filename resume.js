@@ -432,12 +432,12 @@ var drawTimeline = function (config, resume) {
 }
 
 var drawDescription = function (config, resume) {
-    var height = window.innerHeight - config.timelineMargin - config.timelineMargin;
+    var height = window.innerHeight - config.timelineHeight - config.timelineMargin;
     d3.select("#" + config.containerId)
 	.append("div")
 	.attr('id', config.descriptionId)
 	.style('width', config.containerWidth)
-	.style('height', height + 'px');
+	.style('height', height + 'px')
     ;
 };
 
