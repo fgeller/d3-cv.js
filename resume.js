@@ -288,7 +288,7 @@ drawResume = function (resume) {
 	    var i = d3.interpolateNumber(0, offset);
 	    return function(t) {
 		d3
-		    .select(".description")
+		    .select("#" + config.descriptionId)
 		    .property('scrollTop', original + i(t));
 	    };
 	};
@@ -296,7 +296,7 @@ drawResume = function (resume) {
 
     var scrollToDescriptionEntry = function (d) {
 	var descriptionEntry = findDescription(d);
-	var originalScroll = d3.select(".description").property('scrollTop');
+	var originalScroll = d3.select("#" + config.descriptionId).property('scrollTop');
 	var descriptionBottomOffset = elementBottomOffset(descriptionEntry);
 	var descriptionTopOffset = elementTopOffset(descriptionEntry);
 
