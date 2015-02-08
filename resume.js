@@ -101,7 +101,10 @@
 
     var description = container.append("div");
     description.attr('class', 'description');
-    description.style('margin-bottom', '100px');  // timeline height
+    // description.style('margin-bottom', '100px');  // timeline height
+    description.style('height', (window.innerHeight - 90 - 20) + 'px');
+    description.style('overflow', 'scroll');
+    // timeline height
 
     var monthYearFormat = d3.time.format("%m/%Y");
 
@@ -407,6 +410,16 @@
 	.attr('height', boxHeight)
 	.text(function (d) { return d.title || d.degree; });
 
+    function elementBottomOffset (el) {
+	var rect = el.getBoundingClientRect();
+	var viewHeight = window.innerHeight || document.documentElement.clientHeight;
+	return rect.bottom - viewHeight + 90 + 20;
+    }
+
+    function elementTopOffset (el) {
+	return el.getBoundingClientRect().top - 20;
+    }
+
     timeline.selectAll('.timeline')
 	.data(resume.professionalExperience)
 	.enter()
@@ -415,8 +428,76 @@
 	.attr('x', boxX)
 	.attr('y', boxY("professional"))
 	.attr('width', boxWidth)
-	.attr('height', boxHeight);
+	.attr('height', boxHeight)
+	.on('mouseover', function (d) {
+	    d3
+		.selectAll(".description-professional-experience")[0]
+		.forEach(function (description) {
+		    if (d === description.__data__) {
+
+			var originalScroll = d3.select(".description").property('scrollTop');
+			var descriptionBottomOffset = elementBottomOffset(description);
+			var descriptionTopOffset = elementTopOffset(description);
+
+			console.log(
+			    "originalScroll", originalScroll,
+			    "descriptionBottomOffset", descriptionBottomOffset,
+			    "descriptionTopOffset", descriptionTopOffset
+			);
+
+			function scrollTween(offset) {
+			    return function() {
+				var i = d3.interpolateNumber(0, offset);
+				return function(t) {
+				    d3
+					.select(".description")
+					.property('scrollTop', originalScroll + i(t));
+				};
+			    };
+			};
+
+			if (descriptionBottomOffset > 0) { // scroll up
+			    d3.transition()
+				.delay(0)
+				.duration(600)
+				.tween("scroll", scrollTween(descriptionBottomOffset));
+			}
+
+
+			if (descriptionTopOffset < 0) { // scroll down
+			    d3.transition()
+				.delay(0)
+				.duration(600)
+				.tween("scroll", scrollTween(descriptionTopOffset));
+			}
+
+			d3.select(description)
+			    .style("background", "#f1c40f")
+		    }
+		});
+	})
+	.on('mouseout', function (d) {
+	    d3
+		.selectAll(".description-professional-experience")[0]
+		.forEach(function (description) {
+		    if (d === description.__data__) {
+			d3.select(description)
+			    .style("background", "#fff");
+		    }
+		});
+	})
+    ;
 
     d3.select(".timeline-container").property("scrollLeft", 2000);
 
 })();
+
+// 	.on('mouseover', function(d){
+// graphContainer.selectAll("path.item").transition()
+// .attr("stroke-width", "1")
+// .attr("fill-opacity", .2);
+// d3.select(this).transition()
+// .attr("stroke-width", "2")
+// .attr("fill-opacity", 1);
+// showInfo(svg, className, d);
+// })
