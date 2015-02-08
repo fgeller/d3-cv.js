@@ -195,8 +195,6 @@ var academicExperienceDescription = function (config, resume) {
     }
 };
 
-
-
 var drawAcademicExperience = function (config, resume) {
 
     var academicExperience = d3.select("#" + config.descriptionId)
@@ -214,6 +212,67 @@ var drawAcademicExperience = function (config, resume) {
     	.append('div')
     	.attr('class', 'description-academic-experience')
 	.html(academicExperienceDescription(config, resume));
+};
+
+
+function elementBottomOffset (el) {
+    var rect = el.getBoundingClientRect();
+    var viewHeight = window.innerHeight || document.documentElement.clientHeight;
+    return rect.bottom - viewHeight + 90 + 20; // TODO magic!
+}
+
+function elementTopOffset (el) {
+    return el.getBoundingClientRect().top - 20; // TODO magic!
+}
+
+var findDescription = function (config, d) {
+    return d3.selectAll("div").filter(
+	function (div) {
+	    return div === d;
+	}
+    )[0][0];  // why oh why?
+};
+
+var scrollDescriptionTween = function (config, original, offset) {
+    return function() {
+	var i = d3.interpolateNumber(0, offset);
+	return function(t) {
+	    d3
+		.select("#" + config.descriptionId)
+		.property('scrollTop', original + i(t));
+	};
+    };
+};
+
+var scrollToDescriptionEntry = function (config, resume) {
+    return function (d) {
+	var descriptionEntry = findDescription(config, d);
+	var originalScroll = d3.select("#" + config.descriptionId).property('scrollTop');
+	var descriptionBottomOffset = elementBottomOffset(descriptionEntry);
+	var descriptionTopOffset = elementTopOffset(descriptionEntry);
+
+	if (descriptionBottomOffset > 0) { // scroll up
+	    d3.transition()
+		.duration(600)
+		.tween("scroll", scrollDescriptionTween(config, originalScroll, descriptionBottomOffset));
+	}
+
+	if (descriptionTopOffset < 0) { // scroll down
+	    d3.transition()
+		.duration(600)
+		.tween("scroll", scrollDescriptionTween(config, originalScroll, descriptionTopOffset));
+	}
+
+	d3.select(descriptionEntry)
+	    .style("background", config.highlightColor)
+    }
+};
+
+var unhighlightDescriptionEntry = function (config, resume) {
+    return function (d) {
+	var descriptionEntry = findDescription(config, d);
+	d3.select(descriptionEntry).style("background", "#fff");
+    }
 };
 
 drawResume = function (resume) {
@@ -239,62 +298,6 @@ drawResume = function (resume) {
     drawAcademicExperience(config, resume);
 
     /* ----- TIMELINE ------ */
-
-    function elementBottomOffset (el) {
-	var rect = el.getBoundingClientRect();
-	var viewHeight = window.innerHeight || document.documentElement.clientHeight;
-	return rect.bottom - viewHeight + 90 + 20;
-    }
-
-    function elementTopOffset (el) {
-	return el.getBoundingClientRect().top - 20;
-    }
-
-    var findDescription = function (d) {
-	return description.selectAll("div").filter(
-	    function (div) {
-		return div === d;
-	    }
-	)[0][0];  // why oh why?
-    };
-
-    function scrollDescriptionTween(original, offset) {
-	return function() {
-	    var i = d3.interpolateNumber(0, offset);
-	    return function(t) {
-		d3
-		    .select("#" + config.descriptionId)
-		    .property('scrollTop', original + i(t));
-	    };
-	};
-    };
-
-    var scrollToDescriptionEntry = function (d) {
-	var descriptionEntry = findDescription(d);
-	var originalScroll = d3.select("#" + config.descriptionId).property('scrollTop');
-	var descriptionBottomOffset = elementBottomOffset(descriptionEntry);
-	var descriptionTopOffset = elementTopOffset(descriptionEntry);
-
-	if (descriptionBottomOffset > 0) { // scroll up
-	    d3.transition()
-		.duration(600)
-		.tween("scroll", scrollDescriptionTween(originalScroll, descriptionBottomOffset));
-	}
-
-	if (descriptionTopOffset < 0) { // scroll down
-	    d3.transition()
-		.duration(600)
-		.tween("scroll", scrollDescriptionTween(originalScroll, descriptionTopOffset));
-	}
-
-	d3.select(descriptionEntry)
-	    .style("background", config.highlightColor)
-    };
-
-    var unhighlightDescriptionEntry = function (d) {
-	var descriptionEntry = findDescription(d);
-	d3.select(descriptionEntry).style("background", "#fff");
-    }
 
     var timelineContainer = container.append('div')
 	.attr("class", "timeline-container")
@@ -400,8 +403,8 @@ drawResume = function (resume) {
 	.attr('y', boxY("academic"))
 	.attr('width', boxWidth)
 	.attr('height', boxHeight)
-	.on('mouseover', scrollToDescriptionEntry)
-	.on('mouseout', unhighlightDescriptionEntry)
+	.on('mouseover', scrollToDescriptionEntry(config, resume))
+	.on('mouseout', unhighlightDescriptionEntry(config, resume))
     ;
 
     timeline.selectAll('.timeline')
@@ -413,8 +416,8 @@ drawResume = function (resume) {
 	.attr('y', boxY("professional"))
 	.attr('width', boxWidth)
 	.attr('height', boxHeight)
-	.on('mouseover', scrollToDescriptionEntry)
-	.on('mouseout', unhighlightDescriptionEntry)
+	.on('mouseover', scrollToDescriptionEntry(config, resume))
+	.on('mouseout', unhighlightDescriptionEntry(config, resume))
     ;
 
     d3.select(".timeline-container").property("scrollLeft", config.pixelsForTimeline);
