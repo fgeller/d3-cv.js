@@ -1,5 +1,7 @@
 
 (function () {
+    var preferredBoxHeight = 20;
+    var pixelsForTimeline = 3000;
 
     var resume = {
 	name: "Donald Duck",
@@ -371,7 +373,7 @@
 
     var timeline = timelineContainer.append("svg");
     var margin = {top: 20, right: 20, bottom: 10, left:10},
-	width = 2000,
+	width = pixelsForTimeline,
 	height = 90;
 
     timeline.attr("class", "timeline");
@@ -422,9 +424,7 @@
     };
 
     var boxHeight = function (d) {
-	var preferredHeight = 12;
-
-	return preferredHeight;
+	return preferredBoxHeight;
     };
 
     var boxX = function (d) {
@@ -482,6 +482,6 @@
 	.on('mouseout', unhighlightDescriptionEntry)
     ;
 
-    d3.select(".timeline-container").property("scrollLeft", 2000);
+    d3.select(".timeline-container").property("scrollLeft", pixelsForTimeline);
 
 })();
