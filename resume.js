@@ -337,6 +337,22 @@ var timelineBoxHeight = function (config) {
     }
 };
 
+var findMinYear = function (resume) {
+    var extractDates = function (d) {
+	if (d.end) {
+	    return [d.start, d.end];
+	}
+	return [d.start];
+    };
+
+    var allDates = resume.degrees.map(extractDates)
+	.concat(resume.professionalExperience.map(extractDates), resume.academicExperience.map(extractDates))
+	.reduce(function (accum, next) { return accum.concat(next); })
+    ;
+
+    return d3.min(allDates).getFullYear();
+};
+
 var drawTimeline = function (config, resume) {
     var width = config.timelineWidth;
     var height = config.timelineHeight;
@@ -355,7 +371,8 @@ var drawTimeline = function (config, resume) {
 	.attr("height", height + "px")
     ;
 
-    var startDate = new Date("1994-01-01"); // TODO: find smallest date
+    var minYear = findMinYear(resume);
+    var startDate = new Date(minYear, 0, 0);
     var endDate = new Date();
 
     var scale = d3.time.scale()
