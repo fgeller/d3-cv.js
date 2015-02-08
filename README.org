@@ -1,12 +1,7 @@
 * Tasks
-** TODO Draw textual description
 ** TODO Center and highlight timeline box when hovering over textual entry
-** TODO Highlight and scroll to textual description when hovering over timeline box
-** TODO Draw header information
 ** TODO Fix loading issues (don't inline script in body?)
 ** TODO Inline web font?
-** TODO constrain timeline to container width + scrollable
-** TODO scroll timeline to today on load
 ** TODO rounded boxes?
    http://tutorials.jenkov.com/svg/rect-element.html
 * Resources
