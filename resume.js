@@ -20,6 +20,10 @@ var div = function (klass, contents) {
     return '<div class="' + klass + '">' + contents + '</div>';
 }
 
+var span = function (klass, contents) {
+    return '<span class="' + klass + '">' + contents + '</span>';
+};
+
 var headerDescription = function (config, resume) {
     var name = '<div class="description-header-name">' + resume.name + '</div>';
 
@@ -54,6 +58,62 @@ var drawHeader = function (config, resume) {
 	.html(headerDescription(config, resume));
 };
 
+var professionalExperienceDescription = function (config, resume) {
+    return function (d) {
+	var summary = div(
+	    "description-professional-experience-summary",
+	    span("description-professional-experience-title", d.title) +
+		' — ' +
+		span("description-professional-experience-role", d.role) +
+		span("description-professional-experience-company", d.company) +
+		' in ' +
+		span('description-professional-experience-location', d.location)
+	);
+
+	var dates = div(
+	    "description-professional-experience-dates",
+	    span("description-professional-date-start", config.monthYearFormat(d.start)) +
+		'—' +
+		span("description-professional-date-end", (d.end ? config.monthYearFormat(d.end) : 'present'))
+	);
+
+	var header = div(
+	    "description-professional-experience-header",
+	    line(column(20, 24, summary), column(4, 24, dates))
+	);
+
+	var lines = div(
+	    "description-professional-experience-lines",
+	    d.summary.map(
+		function(lineContents) {
+		    return line(column(1,1, div("description-professional-experience-line", lineContents)));
+		}
+	    ).join("")
+	);
+
+	return header + lines;
+    }
+};
+
+var drawProfessionalExperience = function (config, resume) {
+
+    var professionalExperience = d3.select("#" + config.descriptionId)
+	.append('div')
+	.attr('class', 'description-section');
+
+    professionalExperience
+        .append('div')
+        .attr('class', 'description-section-header')
+        .text('Professional Experience');
+
+    professionalExperience.selectAll()
+    	.data(resume.professionalExperience)
+    	.enter()
+    	.append('div')
+    	.attr('class', 'description-professional-experience')
+	.html(professionalExperienceDescription(config, resume));
+};
+
 drawResume = function (resume) {
     var config = {
 	preferredBoxHeight: 20,
@@ -72,63 +132,11 @@ drawResume = function (resume) {
     description.style('overflow', 'scroll');
 
     drawHeader(config, resume);
+    drawProfessionalExperience(config, resume);
 
 
     /* ----- PROFESSIONAL EXPERIENCE ------ */
 
-    var professionalExperienceDescription = function (d) {
-	var html = '';
-	html += '<div class="description-professional-experience-header">';
-
-	html += '<div class="pure-g">'
-	html += '<div class="pure-u-20-24">'
-	html += '<div class="description-professional-experience-summary">';
-	html += '<span class="description-professional-experience-title">' + d.title + '</span>';
-	html += ' — ';
-	html += ' <span class="description-professional-experience-role">' + d.role + '</span>';
-	html += ' at <span class="description-professional-experience-company">' + d.company + '</span>';
-	html += ' in <span class="description-professional-experience-location">' + d.location + '</span>';
-	html += '</div>';
-	html += '</div>';
-
-	html += '<div class="pure-u-4-24">'
-	html += '<div class="description-professional-experience-dates">';
-	html += '<span class="description-professional-date-start">' + config.monthYearFormat(d.start) + '</span>';
-	html += '—<span class="description-professional-date-end">' + (d.end ? config.monthYearFormat(d.end) : 'present') + '</span>';
-	html += '</div>';
-	html += '</div>';
-
-	html += '</div>';
-
-	html += '<div class="description-professional-experience-lines">'
-	d.summary.forEach(
-	    function(line) {
-		html += '<div class="description-professional-experience-line">'
-		html += line;
-		html += '</div>';
-	    }
-	);
-	html += '</div>';
-
-	return html;
-    };
-
-    var professionalExperience = description
-	.append('div')
-	.attr('class', 'description-section');
-
-    professionalExperience
-        .append('div')
-        .attr('class', 'description-section-header')
-        .text('Professional Experience');
-
-    // TODO: not sure why i need this selectAll vs select vs just description
-    professionalExperience.selectAll(".description")
-    	.data(resume.professionalExperience)
-    	.enter()
-    	.append('div')
-    	.attr('class', 'description-professional-experience')
-	.html(professionalExperienceDescription);
 
     /* ----- EDUCATION ------ */
 
@@ -245,6 +253,33 @@ drawResume = function (resume) {
 		return div === d;
 	    }
 	)[0][0];  // why oh why?
+    };
+
+    var headerDescription = function () {
+	var name = '<div class="description-header-name">' + resume.name + '</div>';
+
+	var email = div(
+	    'description-header-email',
+	    '<a href="mailto:' + resume.email + '"><i class="fa fa-envelope-square"></i></a>'
+	);
+
+	var linkedin = div(
+	    'description-header-linkedin',
+	    '<a href="' + resume.linkedin + '"><i class="fa fa-linkedin-square"></i></a>'
+	);
+
+	var github = div(
+	    'description-header-github',
+	    '<a href="' + resume.github + '"><i class="fa fa-github-square"></i></a>'
+	);
+
+	var summary = div('description-header-summary', resume.summary);
+
+	var links = line(column(8, 24, email) + column(8, 24, github) + column(8, 24, linkedin));
+	return (
+	    line(column(20, 24, name) + column(4, 24, links)) +
+	    line(column(1, 1, summary))
+	);
     };
 
 
