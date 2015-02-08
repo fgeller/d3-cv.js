@@ -157,6 +157,7 @@
 
     var description = container.append("div");
     description.attr('class', 'description');
+    description.style('margin-bottom', '200px');  // timeline height
 
     var monthYearFormat = d3.time.format("%m/%Y");
 
@@ -282,13 +283,17 @@
     var timelineContainer = container.append('div')
 	.attr("class", "timeline-container")
 	.style("width", "960px")
+	.style("height", "90px")
+	.style("position", "fixed")
+	.style("bottom", 0)
 	.style("overflow", "scroll")
+	.style("border-top", "3pt solid #ecf0f1")
     ;
 
     var timeline = timelineContainer.append("svg");
     var margin = {top: 20, right: 20, bottom: 10, left:10},
 	width = 2000,
-	height = 150;
+	height = 90;
 
     timeline.attr("class", "timeline");
     timeline.attr("width", width + "px");
