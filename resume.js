@@ -101,7 +101,7 @@
 
     var description = container.append("div");
     description.attr('class', 'description');
-    description.style('margin-bottom', '200px');  // timeline height
+    description.style('margin-bottom', '100px');  // timeline height
 
     var monthYearFormat = d3.time.format("%m/%Y");
 
@@ -109,20 +109,39 @@
 
     var headerDescription = function () {
 	var html = '';
+	html += '<div class="pure-g">'
+	html += '<div class="pure-u-20-24">'
 	html += '<div class="description-header-name">';
 	html += resume.name;
 	html += '</div>';
+	html += '</div>';
+	html += '<div class="pure-u-4-24">'
+	html += '<div class="pure-g">'
+	html += '<div class="pure-u-8-24">'
 	html += '<div class="description-header-email">';
 	html += '<a href="mailto:' + resume.email + '"><i class="fa fa-envelope-square"></i></a>' ;
 	html += '</div>';
+	html += '</div>';
+	html += '<div class="pure-u-8-24">'
 	html += '<div class="description-header-linkedin">';
 	html += '<a href="' + resume.linkedin + '"><i class="fa fa-linkedin-square"></i></a>';
 	html += '</div>';
+	html += '</div>';
+	html += '<div class="pure-u-8-24">'
 	html += '<div class="description-header-github">';
 	html += '<a href="' + resume.github + '"><i class="fa fa-github-square"></i></a>' ;
 	html += '</div>';
+	html += '</div>';
+	html += '</div>';
+	html += '</div>';
+	html += '</div>';
+
+	html += '<div class="pure-g">'
+	html += '<div class="pure-u-1">'
 	html += '<div class="description-header-summary">';
 	html += resume.summary;
+	html += '</div>';
+	html += '</div>';
 	html += '</div>';
 
 	return html;
@@ -143,6 +162,9 @@
     var professionalExperienceDescription = function (d) {
 	var html = '';
 	html += '<div class="description-professional-experience-header">';
+
+	html += '<div class="pure-g">'
+	html += '<div class="pure-u-20-24">'
 	html += '<div class="description-professional-experience-summary">';
 	html += '<span class="description-professional-experience-title">' + d.title + '</span>';
 	html += ' — ';
@@ -150,11 +172,17 @@
 	html += ' at <span class="description-professional-experience-company">' + d.company + '</span>';
 	html += ' in <span class="description-professional-experience-location">' + d.location + '</span>';
 	html += '</div>';
+	html += '</div>';
+
+	html += '<div class="pure-u-4-24">'
 	html += '<div class="description-professional-experience-date">';
 	html += '<span class="description-professional-date-start">' + monthYearFormat(d.start) + '</span>';
 	html += '—<span class="description-professional-date-end">' + (d.end ? monthYearFormat(d.end) : 'present') + '</span>';
 	html += '</div>';
 	html += '</div>';
+
+	html += '</div>';
+
 	html += '<div class="description-professional-experience-lines">'
 	d.summary.forEach(
 	    function(line) {
@@ -198,6 +226,8 @@
 
     var educationDegreeDescription = function (d) {
 	var html = '';
+	html += '<div class="pure-g">'
+	html += '<div class="pure-u-20-24">'
 	html += '<div class="description-education-degree-summary">';
 	html += '<span class="description-education-degree-title">' + d.degree + '</span>';
 	html += ' at <span class="description-education-degree-institution">' + d.institution + '</span>';
@@ -205,9 +235,14 @@
 	html += ' <span class="description-education-degree-concentration">' + d.concentration + '</span>';
 	html += ', <span class="description-education-degree-location">' + d.location + '</span>';
 	html += '</div>';
+	html += '</div>';
+
+	html += '<div class="pure-u-4-24">'
 	html += '<div class="description-education-degree-dates">';
 	html += '<span class="description-education-degree-start">' + monthYearFormat(d.start) + '</span>';
 	html += '—<span class="description-education-degree-end">' + (d.end ? monthYearFormat(d.end) : 'present') + '</span>';
+	html += '</div>';
+	html += '</div>';
 	html += '</div>';
 
 	return html;
@@ -234,14 +269,21 @@
 
     var academicExperienceDescription = function (d) {
 	var html = '';
+	html += '<div class="pure-g">'
+	html += '<div class="pure-u-20-24">'
 	html += '<div class="description-academic-experience-summary">';
 	html += '<span class="description-academic-experience-title">' + d.title + '</span>';
 	html += ' at <span class="description-academic-experience-institution">' + d.institution + '</span>';
 	html += ' in <span class="description-academic-experience-location">' + d.location + '</span>';
 	html += '</div>';
+	html += '</div>';
+
+	html += '<div class="pure-u-4-24">'
 	html += '<div class="description-academic-experience-dates">';
 	html += '<span class="description-academic-experience-start">' + monthYearFormat(d.start) + '</span>';
 	html += '—<span class="description-academic-experience-end">' + (d.end ? monthYearFormat(d.end) : 'present') + '</span>';
+	html += '</div>';
+	html += '</div>';
 	html += '</div>';
 
 	return html;
