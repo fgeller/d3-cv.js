@@ -302,6 +302,63 @@
 
     /* ----- TIMELINE ------ */
 
+    function elementBottomOffset (el) {
+	var rect = el.getBoundingClientRect();
+	var viewHeight = window.innerHeight || document.documentElement.clientHeight;
+	return rect.bottom - viewHeight + 90 + 20;
+    }
+
+    function elementTopOffset (el) {
+	return el.getBoundingClientRect().top - 20;
+    }
+
+    var findDescription = function (d) {
+	return description.selectAll("div").filter(
+	    function (div) {
+		return div === d;
+	    }
+	)[0][0];  // why oh why?
+    };
+
+
+    function scrollDescriptionTween(original, offset) {
+	return function() {
+	    var i = d3.interpolateNumber(0, offset);
+	    return function(t) {
+		d3
+		    .select(".description")
+		    .property('scrollTop', original + i(t));
+	    };
+	};
+    };
+
+    var scrollToDescriptionEntry = function (d) {
+	var descriptionEntry = findDescription(d);
+	var originalScroll = d3.select(".description").property('scrollTop');
+	var descriptionBottomOffset = elementBottomOffset(descriptionEntry);
+	var descriptionTopOffset = elementTopOffset(descriptionEntry);
+
+	if (descriptionBottomOffset > 0) { // scroll up
+	    d3.transition()
+		.duration(600)
+		.tween("scroll", scrollDescriptionTween(originalScroll, descriptionBottomOffset));
+	}
+
+	if (descriptionTopOffset < 0) { // scroll down
+	    d3.transition()
+		.duration(600)
+		.tween("scroll", scrollDescriptionTween(originalScroll, descriptionTopOffset));
+	}
+
+	d3.select(descriptionEntry)
+	    .style("background", "#f1c40f")
+    };
+
+    var unhighlightDescriptionEntry = function (d) {
+	var descriptionEntry = findDescription(d);
+	d3.select(descriptionEntry).style("background", "#fff");
+    }
+
     var timelineContainer = container.append('div')
 	.attr("class", "timeline-container")
 	.style("width", "960px")
@@ -408,17 +465,9 @@
 	.attr('y', boxY("academic"))
 	.attr('width', boxWidth)
 	.attr('height', boxHeight)
-	.text(function (d) { return d.title || d.degree; });
-
-    function elementBottomOffset (el) {
-	var rect = el.getBoundingClientRect();
-	var viewHeight = window.innerHeight || document.documentElement.clientHeight;
-	return rect.bottom - viewHeight + 90 + 20;
-    }
-
-    function elementTopOffset (el) {
-	return el.getBoundingClientRect().top - 20;
-    }
+	.on('mouseover', scrollToDescriptionEntry)
+	.on('mouseout', unhighlightDescriptionEntry)
+    ;
 
     timeline.selectAll('.timeline')
 	.data(resume.professionalExperience)
@@ -429,63 +478,8 @@
 	.attr('y', boxY("professional"))
 	.attr('width', boxWidth)
 	.attr('height', boxHeight)
-	.on('mouseover', function (d) {
-	    d3
-		.selectAll(".description-professional-experience")[0]
-		.forEach(function (description) {
-		    if (d === description.__data__) {
-
-			var originalScroll = d3.select(".description").property('scrollTop');
-			var descriptionBottomOffset = elementBottomOffset(description);
-			var descriptionTopOffset = elementTopOffset(description);
-
-			console.log(
-			    "originalScroll", originalScroll,
-			    "descriptionBottomOffset", descriptionBottomOffset,
-			    "descriptionTopOffset", descriptionTopOffset
-			);
-
-			function scrollTween(offset) {
-			    return function() {
-				var i = d3.interpolateNumber(0, offset);
-				return function(t) {
-				    d3
-					.select(".description")
-					.property('scrollTop', originalScroll + i(t));
-				};
-			    };
-			};
-
-			if (descriptionBottomOffset > 0) { // scroll up
-			    d3.transition()
-				.delay(0)
-				.duration(600)
-				.tween("scroll", scrollTween(descriptionBottomOffset));
-			}
-
-
-			if (descriptionTopOffset < 0) { // scroll down
-			    d3.transition()
-				.delay(0)
-				.duration(600)
-				.tween("scroll", scrollTween(descriptionTopOffset));
-			}
-
-			d3.select(description)
-			    .style("background", "#f1c40f")
-		    }
-		});
-	})
-	.on('mouseout', function (d) {
-	    d3
-		.selectAll(".description-professional-experience")[0]
-		.forEach(function (description) {
-		    if (d === description.__data__) {
-			d3.select(description)
-			    .style("background", "#fff");
-		    }
-		});
-	})
+	.on('mouseover', scrollToDescriptionEntry)
+	.on('mouseout', unhighlightDescriptionEntry)
     ;
 
     d3.select(".timeline-container").property("scrollLeft", 2000);
