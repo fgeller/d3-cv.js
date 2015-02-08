@@ -401,8 +401,17 @@ var drawTimeline = function (config, resume) {
 	.on('mouseout', unhighlightDescriptionEntry(config, resume))
     ;
 
-    // TODO: animate?
-    d3.select("#" + config.timelineContainerId).property("scrollLeft", config.timelineWidth);
+    var interpolator = d3.interpolateNumber(0, config.timelineWidth);
+    var initialScrollTween = function () {
+	return function (t) {
+	    d3.select("#" + config.timelineContainerId).property("scrollLeft", interpolator(t));
+	};
+    };
+
+    d3
+	.transition()
+	.duration(3000)
+	.tween("scroll", initialScrollTween);
 }
 
 var drawDescription = function (config, resume) {
