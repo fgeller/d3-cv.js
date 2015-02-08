@@ -1,0 +1,107 @@
+body {
+    color: #2c3e50;
+    margin: .5em;
+}
+
+a {
+    color: #2980b9;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #d35400;
+    text-decoration: none;
+}
+
+.axis path, .axis line {
+    fill: none;
+    stroke: #7f8c8d;
+    shape-rendering: crispEdges;
+}
+
+.timeline {
+    font-family: 'EB Garamond', sans-serif;
+    font-size: 12pt;
+    font-weight: 400;
+    fill: #000;
+}
+
+.timeline-professional-experience {
+    fill: #27ae60;
+    stroke: #fff;
+    shape-rendering: crispEdges;
+}
+
+.timeline-academic-experience {
+    fill: #2980b9;
+    stroke: #fff;
+    shape-rendering: crispEdges;
+}
+
+.description-section {
+}
+
+.description-section-header {
+    margin-top: 1em;
+    margin-bottom: .5em;
+    font-family: 'Raleway';
+    font-weight: 100;
+    text-transform: uppercase;
+    font-size: 20pt;
+    color: #27ae60;
+}
+
+.description-header-name {
+    font-family: 'Raleway';
+    font-weight: 100;
+    font-size: 42pt;
+    text-transform: uppercase;
+    color: #27ae60;
+}
+
+.description-header-summary {
+    font-family: 'EB Garamond';
+    font-size: 14pt;
+}
+
+.description-header-email {
+    font-size: 32pt;
+}
+
+.description-header-github {
+    font-size: 32pt;
+}
+
+.description-header-linkedin {
+    font-size: 32pt;
+}
+
+.description-professional-experience {
+    font-family: 'EB Garamond';
+    font-size: 14pt;
+    padding: .2em;
+}
+
+.description-professional-experience .pure-g {
+    font-family: 'EB Garamond';
+    font-size: 14pt;
+}
+
+.description-professional-experience div[class^="pure-u"] {
+    font-family: 'EB Garamond';
+    font-size: 14pt;
+}
+
+.description-professional-experience-lines {
+    margin-left: 1em;
+}
+
+.description-education-degree div[class^="pure-u"] {
+    font-family: 'EB Garamond';
+    font-size: 14pt;
+}
+
+.description-academic-experience div[class^="pure-u"] {
+    font-family: 'EB Garamond';
+    font-size: 14pt;
+}

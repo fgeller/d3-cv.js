@@ -1,5 +1,4 @@
-
-(function () {
+drawResume = function (resume) {
     var preferredBoxHeight = 20;
     var pixelsForTimeline = 3000;
 
@@ -483,5 +482,4 @@
     ;
 
     d3.select(".timeline-container").property("scrollLeft", pixelsForTimeline);
-
-})();
+};
