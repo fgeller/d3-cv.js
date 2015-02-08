@@ -243,6 +243,40 @@
     	.attr('class', 'description-education-degree')
 	.html(educationDegreeDescription);
 
+    /* ----- ACADEMIC EXPERIENCE ------ */
+
+    var academicExperience = description
+	.append('div')
+	.attr('class', 'description-section');
+
+    academicExperience
+        .append('div')
+        .attr('class', 'description-header')
+        .text('Academic Experience');
+
+    var academicExperienceDescription = function (d) {
+	var html = '';
+	html += '<div class="description-academic-experience-summary">';
+	html += '<span class="description-academic-experience-title">' + d.title + '</span>';
+	html += ' at <span class="description-academic-experience-institution">' + d.institution + '</span>';
+	html += ' in <span class="description-academic-experience-location">' + d.location + '</span>';
+	html += '</div>';
+	html += '<div class="description-academic-experience-dates">';
+	html += '<span class="description-academic-experience-start">' + monthYearFormat(d.start) + '</span>';
+	html += '—<span class="description-academic-experience-end">' + (d.end ? monthYearFormat(d.end) : 'present') + '</span>';
+	html += '</div>';
+
+	return html;
+    };
+
+    // TODO: not sure why i need this selectAll vs select vs just description
+    academicExperience.selectAll(".description")
+    	.data(resume.academicExperience)
+    	.enter()
+    	.append('div')
+    	.attr('class', 'description-academic-experience')
+	.html(academicExperienceDescription);
+
     /* ----- TIMELINE ------ */
 
     var timeline = container.append("svg");
