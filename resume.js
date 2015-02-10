@@ -1,4 +1,4 @@
-var line = function (contents) {
+var row = function (contents) {
     var html = '';
     html += '<div class="pure-g">'
     html += contents;
@@ -44,10 +44,10 @@ var headerDescription = function (config, resume) {
 
     var summary = div('description-header-summary', resume.summary);
 
-    var links = line(column(8, 24, email) + column(8, 24, github) + column(8, 24, linkedin));
+    var links = row(column(8, 24, email) + column(8, 24, github) + column(8, 24, linkedin));
     return (
-	line(column(20, 24, name) + column(4, 24, links)) +
-	    line(column(1, 1, summary))
+	row(column(20, 24, name) + column(4, 24, links)) +
+	    row(column(1, 1, summary))
     );
 }
 
@@ -80,14 +80,14 @@ var professionalExperienceDescription = function (config, resume) {
 
 	var header = div(
 	    "description-professional-experience-header",
-	    line(column(20, 24, summary) + column(4, 24, dates))
+	    row(column(20, 24, summary) + column(4, 24, dates))
 	);
 
 	var lines = div(
 	    "description-professional-experience-lines",
 	    d.summary.map(
 		function(lineContents) {
-		    return line(column(1,1, div("description-professional-experience-line", lineContents)));
+		    return row(column(1,1, div("description-professional-experience-line", lineContents)));
 		}
 	    ).join("")
 	);
