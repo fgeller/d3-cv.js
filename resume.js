@@ -119,38 +119,35 @@ var drawProfessionalExperience = function (config, resume) {
 var educationDegreeDescription = function (config, resume) {
     return function (d) {
 	var html = '';
-	html += '<div class="pure-g">'
-	html += '<div class="pure-u-20-24">'
-	html += '<div class="description-education-degree-summary">';
-	html += '<span class="description-education-degree-title">' + d.degree + '</span>';
-	html += ' at <span class="description-education-degree-institution">' + d.institution + '</span>';
-	html += ', <span class="description-education-degree-location">' + d.location + '</span>';
-	html += '</div>';
-	html += '</div>';
 
-	html += '<div class="pure-u-4-24">'
-	html += '<div class="description-education-degree-dates">';
-	html += '<span class="description-education-degree-start">' + config.monthYearFormat(d.start) + '</span>';
-	html += '—<span class="description-education-degree-end">' + (d.end ? config.monthYearFormat(d.end) : 'present') + '</span>';
-	html += '</div>';
-	html += '</div>';
-	html += '</div>';
-
-	html += '<div class="description-education-degree-lines">'
-	d.summary.forEach(
-	    function(line) {
-		html += '<div class="pure-g">';
-		html += '<div class="pure-u-1">';
-		html += '<div class="description-education-degree-line">';
-		html += line;
-		html += '</div>';
-		html += '</div>';
-		html += '</div>';
-	    }
+	var title = div(
+	    'description-education-degree-summary',
+	    span("description-education-degree-title", d.degree) +
+		' at ' +
+		span("description-education-degree-institution", d.institution) +
+		', ' +
+		span("description-education-degree-location", d.location)
 	);
-	html += '</div>';
 
-	return html;
+	var dates = div(
+	    'description-education-degree-dates',
+	    span("description-education-degree-start", config.monthYearFormat(d.start)) +
+		'—' +
+		span("description-education-degree-end", (d.end ? config.monthYearFormat(d.end) : 'present'))
+	);
+
+	var header = row(column(20, 24, title) + column(4, 24, dates));
+
+	var lines = div(
+	    "description-education-degree-lines",
+	    d.summary.map(
+		function(line) {
+		    return row(column(1, 1, div("description-education-degree-line", line)));
+		}
+	    ).join('')
+	);
+
+	return header + lines;
     }
 };
 
