@@ -112,7 +112,10 @@ var drawProfessionalExperience = function (config, resume) {
     	.enter()
     	.append('div')
     	.attr('class', 'description-professional-experience')
-	.html(professionalExperienceDescription(config, resume));
+	.html(professionalExperienceDescription(config, resume))
+	.on('mouseover', scrollToDescriptionEntry(config, resume))
+	.on('mouseout', unhighlightDescriptionEntry(config, resume))
+    ;
 };
 
 
@@ -166,7 +169,10 @@ var drawEducation = function (config, resume) {
     	.enter()
     	.append('div')
     	.attr('class', 'description-education-degree')
-	.html(educationDegreeDescription(config, resume));
+	.html(educationDegreeDescription(config, resume))
+	.on('mouseover', scrollToDescriptionEntry(config, resume))
+	.on('mouseout', unhighlightDescriptionEntry(config, resume))
+    ;
 };
 
 var academicExperienceDescription = function (config, resume) {
@@ -207,7 +213,10 @@ var drawAcademicExperience = function (config, resume) {
     	.enter()
     	.append('div')
     	.attr('class', 'description-academic-experience')
-	.html(academicExperienceDescription(config, resume));
+	.html(academicExperienceDescription(config, resume))
+	.on('mouseover', scrollToDescriptionEntry(config, resume))
+	.on('mouseout', unhighlightDescriptionEntry(config, resume))
+    ;
 };
 
 
