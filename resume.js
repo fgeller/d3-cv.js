@@ -424,7 +424,8 @@ var drawTimeline = function (config, resume) {
 	.on('mouseout', unhighlightDescriptionEntry(config, resume))
     ;
 
-    var interpolator = d3.interpolateNumber(0, config.timelineWidth);
+    var viewWidth = window.innerWidth || document.documentElement.clientWidth;
+    var interpolator = d3.interpolateNumber(0, config.timelineWidth-window.innerWidth);
     var initialScrollTween = function () {
 	return function (t) {
 	    d3.select("#" + config.timelineContainerId).property("scrollLeft", interpolator(t));
