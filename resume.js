@@ -260,14 +260,16 @@ var scrollToDescriptionEntry = function (config, resume) {
 	}
 
 	d3.select(descriptionEntry)
-	    .style("background", config.highlightColor)
+	    .style("background", config.highlightBackground)
+	    .style("color", config.highlightColor)
     }
 };
 
 var unhighlightDescriptionEntry = function (config, resume) {
     return function (d) {
 	var descriptionEntry = findDescription(config, d);
-	d3.select(descriptionEntry).style("background", "#fff");
+	d3.select(descriptionEntry).style("background", config.defaultBackground);
+	d3.select(descriptionEntry).style("color", config.defaultColor);
     }
 };
 
@@ -443,12 +445,15 @@ drawResume = function (resume) {
 	timelineMargin: 20,
 	timelineWidth: 3000,
 	timelineHeight: 90,
-	highlightColor: "#f1c40f",
-	containerId: "resume-container",
-	descriptionId: "resume-description",
-	timelineContainerId: "timeline-container",
-	timelineId: "resume-timeline",
-	monthYearFormat: d3.time.format("%m/%Y"),
+	defaultColor: '#2c3e50',
+	defaultBackground: '#fff',
+	highlightColor: '#fff',
+	highlightBackground: '#2c3e50',
+	containerId: 'resume-container',
+	descriptionId: 'resume-description',
+	timelineContainerId: 'timeline-container',
+	timelineId: 'resume-timeline',
+	monthYearFormat: d3.time.format('%m/%Y'),
     };
 
     drawDescription(config, resume);

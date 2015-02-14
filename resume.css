@@ -4,18 +4,17 @@ body {
 }
 
 a {
-    color: #2980b9;
+    color: #2c3e50;
     text-decoration: none;
 }
 
 a:hover {
-    color: #f1c40f;
-    text-decoration: none;
+    color: #27ae60;
 }
 
 .axis path, .axis line {
     fill: none;
-    stroke: #7f8c8d;
+    stroke: #2c3e50;
     shape-rendering: crispEdges;
 }
 
@@ -25,6 +24,10 @@ a:hover {
 
 .resume-column {
     display: inline-block;
+}
+
+#resume-container {
+    background-color: #fff;
 }
 
 #resume-timeline {
@@ -43,7 +46,7 @@ a:hover {
     position: fixed;
     bottom: 0;
     overflow: scroll;
-    border-top: 3pt solid #ecf0f1;
+    border-top: 2pt solid #2c3e50;
 }
 
 .timeline-professional-experience {
@@ -53,7 +56,7 @@ a:hover {
 }
 
 .timeline-academic-experience {
-    fill: #2980b9;
+    fill: #2c3e50;
     stroke: #fff;
     shape-rendering: crispEdges;
 }
