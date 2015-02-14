@@ -383,7 +383,7 @@ var drawTimeline = function (config, resume) {
 
     var scale = d3.time.scale()
 	.domain([startDate, endDate])
-	.range([0, width]);
+	.range([config.timelineMargin, width-config.timelineMargin]);
 
     var axis = d3.svg.axis()
 	.scale(scale)
