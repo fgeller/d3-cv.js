@@ -19,6 +19,14 @@ a:hover {
     shape-rendering: crispEdges;
 }
 
+.resume-row {
+    width: 100%;
+}
+
+.resume-column {
+    display: inline-block;
+}
+
 #resume-timeline {
     font-family: 'EB Garamond';
     font-size: 13pt;
@@ -100,7 +108,7 @@ a:hover {
     font-size: 13pt;
 }
 
-.description-professional-experience div[class^="pure-u"] {
+.description-professional-experience {
     font-family: 'EB Garamond';
     font-size: 13pt;
 }
@@ -118,7 +126,7 @@ a:hover {
     text-align: right;
 }
 
-.description-education-degree div[class^="pure-u"] {
+.description-education-degree div {
     font-family: 'EB Garamond';
     font-size: 13pt;
 }
@@ -135,7 +143,7 @@ a:hover {
     text-align: right;
 }
 
-.description-academic-experience div[class^="pure-u"] {
+.description-academic-experience div {
     font-family: 'EB Garamond';
     font-size: 13pt;
 }

@@ -1,6 +1,6 @@
 var row = function (contents) {
     var html = '';
-    html += '<div class="pure-g">'
+    html += '<div class="resume-row">'
     html += contents;
     html += '</div>';
 
@@ -9,7 +9,7 @@ var row = function (contents) {
 
 var column = function (num, denom, contents) {
     var html = '';
-    html += '<div class="pure-u-' + num + '-' + denom + '">';
+    html += '<div class="resume-column" style="width:' + Math.floor(100*num/denom) + '%">';
     html += contents;
     html += '</div>';
 
@@ -356,7 +356,7 @@ var drawTimeline = function (config, resume) {
 
     var timelineContainer = container.append('div')
 	.attr("id", config.timelineContainerId)
-	.style("width", config.containerWidth + "px")
+	.style("width", '100%')
 	.style("height", config.timelineHeight + "px")
     ;
 
@@ -431,7 +431,7 @@ var drawDescription = function (config, resume) {
     d3.select("#" + config.containerId)
 	.append("div")
 	.attr('id', config.descriptionId)
-	.style('width', config.containerWidth)
+	.style('width', '100%')
 	.style('height', height + 'px')
     ;
 };
