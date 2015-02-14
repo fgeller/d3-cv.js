@@ -171,25 +171,23 @@ var drawEducation = function (config, resume) {
 
 var academicExperienceDescription = function (config, resume) {
     return function (d) {
-	var html = '';
-	html += '<div class="pure-g">'
-	html += '<div class="pure-u-20-24">'
-	html += '<div class="description-academic-experience-summary">';
-	html += '<span class="description-academic-experience-title">' + d.title + '</span>';
-	html += ' at <span class="description-academic-experience-institution">' + d.institution + '</span>';
-	html += ' in <span class="description-academic-experience-location">' + d.location + '</span>';
-	html += '</div>';
-	html += '</div>';
+	var summary = div(
+	    'description-academic-experience-summary',
+	    span('description-academic-experience-title', d.title) +
+		' at ' +
+		span('description-academic-experience-institution', d.institution) +
+		' in ' +
+		span('description-academic-experience-location', d.location)
+	);
 
-	html += '<div class="pure-u-4-24">'
-	html += '<div class="description-academic-experience-dates">';
-	html += '<span class="description-academic-experience-start">' + config.monthYearFormat(d.start) + '</span>';
-	html += '—<span class="description-academic-experience-end">' + (d.end ? config.monthYearFormat(d.end) : 'present') + '</span>';
-	html += '</div>';
-	html += '</div>';
-	html += '</div>';
+	var dates = div(
+	    "description-academic-experience-dates",
+	    span("description-academic-experience-start", config.monthYearFormat(d.start)) +
+		'—' +
+		span("description-academic-experience-end", (d.end ? config.monthYearFormat(d.end) : 'present'))
+	);
 
-	return html;
+	return row(column(20, 24, summary) + column(4, 24, dates));
     }
 };
 
