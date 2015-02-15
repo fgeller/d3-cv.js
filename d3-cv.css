@@ -1,0 +1,155 @@
+body {
+    color: #2c3e50;
+    margin: .5em;
+}
+
+a {
+    color: #2c3e50;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #27ae60;
+}
+
+.axis path, .axis line {
+    fill: none;
+    stroke: #2c3e50;
+    shape-rendering: crispEdges;
+}
+
+.cv-row {
+    width: 100%;
+}
+
+.cv-column {
+    display: inline-block;
+}
+
+#cv-container {
+    background-color: #fff;
+}
+
+#cv-timeline {
+    font-family: 'EB Garamond';
+    font-size: 13pt;
+    font-weight: 400;
+    fill: #000;
+    background-color: #fff;
+}
+
+#cv-description {
+    overflow: scroll;
+}
+
+#timeline-container {
+    position: fixed;
+    bottom: 0;
+    overflow: scroll;
+    border-top: 2pt solid #2c3e50;
+}
+
+.timeline-professional-experience {
+    fill: #27ae60;
+    stroke: #fff;
+    shape-rendering: crispEdges;
+}
+
+.timeline-academic-experience {
+    fill: #2c3e50;
+    stroke: #fff;
+    shape-rendering: crispEdges;
+}
+
+.description-section-header {
+    margin-top: 1em;
+    margin-bottom: .5em;
+    font-family: 'Raleway';
+    font-weight: 100;
+    text-transform: uppercase;
+    font-size: 20pt;
+    color: #27ae60;
+}
+
+.description-header-name {
+    font-family: Raleway;
+    font-weight: 100;
+    font-size: 48pt;
+    text-transform: uppercase;
+    color: #27ae60;
+}
+
+.description-header-summary {
+    font-family: 'EB Garamond';
+    font-size: 13pt;
+}
+
+.description-header-email {
+    font-size: 32pt;
+}
+
+.description-header-github {
+    font-size: 32pt;
+}
+
+.description-header-linkedin {
+    font-size: 32pt;
+}
+
+.description-professional-experience-dates {
+    text-align: right;
+}
+
+.description-professional-experience {
+    font-family: 'EB Garamond';
+    font-size: 13pt;
+    padding: .2em;
+    cursor: pointer;
+}
+
+.description-professional-experience .pure-g {
+    font-family: 'EB Garamond';
+    font-size: 13pt;
+}
+
+.description-professional-experience {
+    font-family: 'EB Garamond';
+    font-size: 13pt;
+}
+
+.description-professional-experience-lines {
+    margin-left: 1em;
+}
+
+
+.description-education-degree {
+    padding: .2em;
+}
+
+.description-education-degree-dates {
+    text-align: right;
+}
+
+.description-education-degree div {
+    font-family: 'EB Garamond';
+    font-size: 13pt;
+    cursor: pointer;
+}
+
+.description-education-degree-lines {
+    margin-left: 1em;
+}
+
+.description-academic-experience {
+    padding: .2em;
+}
+
+.description-academic-experience-dates {
+    text-align: right;
+}
+
+.description-academic-experience div {
+    font-family: 'EB Garamond';
+    font-size: 13pt;
+    cursor: pointer;
+}
