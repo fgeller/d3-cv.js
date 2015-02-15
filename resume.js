@@ -219,14 +219,13 @@ var drawAcademicExperience = function (config, resume) {
     ;
 };
 
-
-function elementBottomOffset (config, el) {
+var elementBottomOffset = function (config, el) {
     var rect = el.getBoundingClientRect();
     var viewHeight = window.innerHeight || document.documentElement.clientHeight;
     return rect.bottom - viewHeight + config.timelineHeight + config.timelineMargin;
 }
 
-function elementTopOffset (config, el) {
+var elementTopOffset = function (config, el) {
     return el.getBoundingClientRect().top - config.timelineMargin;
 }
 
