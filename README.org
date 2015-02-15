@@ -1,5 +1,13 @@
+* Demo
+
+  Available at [[http://fgeller.github.io/d3-cv.js/]]
+
 * Resources
 
-  http://d3js.org/
-  https://github.com/glena/d3-resume
-  http://flatuicolors.com/
+  - [[http://d3js.org/][d3.js]]
+  - [[https://github.com/glena/d3-resume][d3-resume]]
+  - [[http://flatuicolors.com/][flatui colors]]
+
+* About
+
+  Goal is mostly to learn a bit about d3 and apply it. Any feedback welcome :)
