@@ -104,6 +104,7 @@ a:hover {
     font-family: 'EB Garamond';
     font-size: 13pt;
     padding: .2em;
+    cursor: pointer;
 }
 
 .description-professional-experience .pure-g {
@@ -132,6 +133,7 @@ a:hover {
 .description-education-degree div {
     font-family: 'EB Garamond';
     font-size: 13pt;
+    cursor: pointer;
 }
 
 .description-education-degree-lines {
@@ -149,4 +151,5 @@ a:hover {
 .description-academic-experience div {
     font-family: 'EB Garamond';
     font-size: 13pt;
+    cursor: pointer;
 }

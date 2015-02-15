@@ -113,7 +113,8 @@ var drawProfessionalExperience = function (config, resume) {
     	.append('div')
     	.attr('class', 'description-professional-experience')
 	.html(professionalExperienceDescription(config, resume))
-	.on('mouseover', scrollToDescriptionEntry(config, resume))
+	.on('click', scrollToTimelineEntry(config, resume))
+	.on('mouseover', highlightEntry(config, resume))
 	.on('mouseout', unhighlightDescriptionEntry(config, resume))
     ;
 };
@@ -170,7 +171,8 @@ var drawEducation = function (config, resume) {
     	.append('div')
     	.attr('class', 'description-education-degree')
 	.html(educationDegreeDescription(config, resume))
-	.on('mouseover', scrollToDescriptionEntry(config, resume))
+	.on('click', scrollToTimelineEntry(config, resume))
+	.on('mouseover', highlightEntry(config, resume))
 	.on('mouseout', unhighlightDescriptionEntry(config, resume))
     ;
 };
@@ -214,7 +216,8 @@ var drawAcademicExperience = function (config, resume) {
     	.append('div')
     	.attr('class', 'description-academic-experience')
 	.html(academicExperienceDescription(config, resume))
-	.on('mouseover', scrollToDescriptionEntry(config, resume))
+	.on('click', scrollToTimelineEntry(config, resume))
+	.on('mouseover', highlightEntry(config, resume))
 	.on('mouseout', unhighlightDescriptionEntry(config, resume))
     ;
 };
@@ -237,6 +240,14 @@ var findDescription = function (config, d) {
     )[0][0]; // why oh why?
 };
 
+var findTimelineEntry = function (config, d) {
+    return d3.selectAll("rect").filter(
+	function (rect) {
+	    return rect === d;
+	}
+    )[0][0]; // why oh why?
+};
+
 var scrollDescriptionTween = function (config, original, offset) {
     return function() {
 	var i = d3.interpolateNumber(0, offset);
@@ -245,6 +256,47 @@ var scrollDescriptionTween = function (config, original, offset) {
 		.select("#" + config.descriptionId)
 		.property('scrollTop', original + i(t));
 	};
+    };
+};
+
+var scrollTimelineTween = function (config, original, offset) {
+    return function() {
+	var i = d3.interpolateNumber(0, offset);
+	return function(t) {
+	    d3.select('#' + config.timelineContainerId).property('scrollLeft', original + i(t));
+	};
+    };
+};
+
+var scrollToTimelineEntry = function (config, resume) {
+    return function (d) {
+	var timeline = findTimelineEntry(config, d);
+	d3.select(timeline).style("fill", '#f1c40f');
+
+	var rightOffset = timeline.getBoundingClientRect().right;
+	var viewWidth = window.innerWidth || document.documentElement.clientWidth;
+	var timelineOriginalScroll = d3.select("#" + config.timelineContainerId).property('scrollLeft');
+
+	var targetScrollLeft = -1;
+	if (rightOffset > (viewWidth/2) && rightOffset < viewWidth) { // maybe scroll to center
+	    targetScrollLeft = timelineOriginalScroll + rightOffset - (viewWidth/2);
+	}
+	else if (rightOffset > viewWidth) { // hidden to the right
+	    targetScrollLeft = timelineOriginalScroll + (rightOffset - (viewWidth/2));
+	}
+	else if (rightOffset < 0) { // hidden to the left
+	    targetScrollLeft = timelineOriginalScroll + rightOffset - (viewWidth / 2);
+	}
+	else if (rightOffset < (viewWidth/2)) { // visible but right end not centered
+	    targetScrollLeft = timelineOriginalScroll - (viewWidth / 2) + rightOffset;
+	}
+
+	timelineScrollTransition = d3.select('#' + config.timelineContainerId)
+	    .transition()
+	    .delay(100)
+	    .duration(700)
+	    .tween('scrollLeft', scrollTimelineTween(config, timelineOriginalScroll, targetScrollLeft-timelineOriginalScroll))
+	;
     };
 };
 
@@ -273,11 +325,32 @@ var scrollToDescriptionEntry = function (config, resume) {
     }
 };
 
+var highlightEntry = function (config, resume) {
+    return function (d) {
+
+	var timeline = findTimelineEntry(config, d);
+	d3.select(timeline).style("fill", '#f1c40f');
+
+	var descriptionEntry = findDescription(config, d);
+	d3.select(descriptionEntry)
+	    .style("background", config.highlightBackground)
+	    .style("color", config.highlightColor)
+    }
+};
+
 var unhighlightDescriptionEntry = function (config, resume) {
     return function (d) {
 	var descriptionEntry = findDescription(config, d);
 	d3.select(descriptionEntry).style("background", config.defaultBackground);
 	d3.select(descriptionEntry).style("color", config.defaultColor);
+
+	var timelineEntry = findTimelineEntry(config, d);
+	var timelineEntryClass = d3.select(timelineEntry).attr('class');
+	if (timelineEntryClass === config.timelineProfessionalExperienceClass) {
+	    d3.select(timelineEntry).style('fill', '#27ae60');
+	} else {
+	    d3.select(timelineEntry).style('fill', '#2c3e50');
+	}
     }
 };
 
@@ -454,6 +527,7 @@ drawResume = function (resume) {
 	timelineMargin: 20,
 	timelineWidth: 3000,
 	timelineHeight: 90,
+	timelineProfessionalExperienceClass: 'timeline-professional-experience',
 	defaultColor: '#2c3e50',
 	defaultBackground: '#fff',
 	highlightColor: '#fff',
