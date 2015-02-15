@@ -318,10 +318,6 @@ var scrollToDescriptionEntry = function (config, cv) {
 		.duration(600)
 		.tween("scroll", scrollDescriptionTween(config, originalScroll, descriptionTopOffset));
 	}
-
-	d3.select(descriptionEntry)
-	    .style("background", config.highlightBackground)
-	    .style("color", config.highlightColor)
     }
 };
 
