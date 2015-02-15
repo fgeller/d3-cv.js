@@ -479,7 +479,8 @@ var drawTimeline = function (config, cv) {
 	.attr('y', timelineBoxY(cv, config, "academic"))
 	.attr('width', timelineBoxWidth(scale))
 	.attr('height', timelineBoxHeight(config))
-	.on('mouseover', scrollToDescriptionEntry(config, cv))
+	.on('mouseover.scroll', scrollToDescriptionEntry(config, cv))
+	.on('mouseover.highlight', highlightEntry(config, cv))
 	.on('mouseout', unhighlightDescriptionEntry(config, cv))
     ;
 
@@ -492,7 +493,8 @@ var drawTimeline = function (config, cv) {
 	.attr('y', timelineBoxY(cv, config, "professional"))
 	.attr('width', timelineBoxWidth(scale))
 	.attr('height', timelineBoxHeight(config))
-	.on('mouseover', scrollToDescriptionEntry(config, cv))
+	.on('mouseover.scroll', scrollToDescriptionEntry(config, cv))
+	.on('mouseover.highlight', highlightEntry(config, cv))
 	.on('mouseout', unhighlightDescriptionEntry(config, cv))
     ;
 
