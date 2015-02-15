@@ -1,6 +1,6 @@
 var row = function (contents) {
     var html = '';
-    html += '<div class="resume-row">'
+    html += '<div class="cv-row">'
     html += contents;
     html += '</div>';
 
@@ -9,7 +9,7 @@ var row = function (contents) {
 
 var column = function (num, denom, contents) {
     var html = '';
-    html += '<div class="resume-column" style="width:' + Math.floor(100*num/denom) + '%">';
+    html += '<div class="cv-column" style="width:' + Math.floor(100*num/denom) + '%">';
     html += contents;
     html += '</div>';
 
@@ -24,25 +24,25 @@ var span = function (klass, contents) {
     return '<span class="' + klass + '">' + contents + '</span>';
 };
 
-var headerDescription = function (config, resume) {
-    var name = '<div class="description-header-name">' + resume.name + '</div>';
+var headerDescription = function (config, cv) {
+    var name = '<div class="description-header-name">' + cv.name + '</div>';
 
     var email = div(
 	'description-header-email',
-	'<a href="mailto:' + resume.email + '"><i class="fa fa-envelope-square"></i></a>'
+	'<a href="mailto:' + cv.email + '"><i class="fa fa-envelope-square"></i></a>'
     );
 
     var linkedin = div(
 	'description-header-linkedin',
-	'<a href="' + resume.linkedin + '"><i class="fa fa-linkedin-square"></i></a>'
+	'<a href="' + cv.linkedin + '"><i class="fa fa-linkedin-square"></i></a>'
     );
 
     var github = div(
 	'description-header-github',
-	'<a href="' + resume.github + '"><i class="fa fa-github-square"></i></a>'
+	'<a href="' + cv.github + '"><i class="fa fa-github-square"></i></a>'
     );
 
-    var summary = div('description-header-summary', resume.summary);
+    var summary = div('description-header-summary', cv.summary);
 
     var links = row(column(8, 24, email) + column(8, 24, github) + column(8, 24, linkedin));
     return (
@@ -51,14 +51,14 @@ var headerDescription = function (config, resume) {
     );
 }
 
-var drawHeader = function (config, resume) {
+var drawHeader = function (config, cv) {
     var header = d3.select("#" + config.descriptionId)
 	.append('div')
 	.attr('class', 'description-section')
-	.html(headerDescription(config, resume));
+	.html(headerDescription(config, cv));
 };
 
-var professionalExperienceDescription = function (config, resume) {
+var professionalExperienceDescription = function (config, cv) {
     return function (d) {
 	var summary = div(
 	    "description-professional-experience-summary",
@@ -96,7 +96,7 @@ var professionalExperienceDescription = function (config, resume) {
     }
 };
 
-var drawProfessionalExperience = function (config, resume) {
+var drawProfessionalExperience = function (config, cv) {
 
     var professionalExperience = d3.select("#" + config.descriptionId)
 	.append('div')
@@ -108,19 +108,19 @@ var drawProfessionalExperience = function (config, resume) {
         .text('Professional Experience');
 
     professionalExperience.selectAll()
-    	.data(resume.professionalExperience)
+    	.data(cv.professionalExperience)
     	.enter()
     	.append('div')
     	.attr('class', 'description-professional-experience')
-	.html(professionalExperienceDescription(config, resume))
-	.on('click', scrollToTimelineEntry(config, resume))
-	.on('mouseover', highlightEntry(config, resume))
-	.on('mouseout', unhighlightDescriptionEntry(config, resume))
+	.html(professionalExperienceDescription(config, cv))
+	.on('click', scrollToTimelineEntry(config, cv))
+	.on('mouseover', highlightEntry(config, cv))
+	.on('mouseout', unhighlightDescriptionEntry(config, cv))
     ;
 };
 
 
-var educationDegreeDescription = function (config, resume) {
+var educationDegreeDescription = function (config, cv) {
     return function (d) {
 	var html = '';
 
@@ -155,7 +155,7 @@ var educationDegreeDescription = function (config, resume) {
     }
 };
 
-var drawEducation = function (config, resume) {
+var drawEducation = function (config, cv) {
     var education = d3.select("#" + config.descriptionId)
 	.append('div')
 	.attr('class', 'description-section');
@@ -166,18 +166,18 @@ var drawEducation = function (config, resume) {
         .text('Education');
 
     education.selectAll()
-    	.data(resume.degrees)
+    	.data(cv.degrees)
     	.enter()
     	.append('div')
     	.attr('class', 'description-education-degree')
-	.html(educationDegreeDescription(config, resume))
-	.on('click', scrollToTimelineEntry(config, resume))
-	.on('mouseover', highlightEntry(config, resume))
-	.on('mouseout', unhighlightDescriptionEntry(config, resume))
+	.html(educationDegreeDescription(config, cv))
+	.on('click', scrollToTimelineEntry(config, cv))
+	.on('mouseover', highlightEntry(config, cv))
+	.on('mouseout', unhighlightDescriptionEntry(config, cv))
     ;
 };
 
-var academicExperienceDescription = function (config, resume) {
+var academicExperienceDescription = function (config, cv) {
     return function (d) {
 	var summary = div(
 	    'description-academic-experience-summary',
@@ -199,7 +199,7 @@ var academicExperienceDescription = function (config, resume) {
     }
 };
 
-var drawAcademicExperience = function (config, resume) {
+var drawAcademicExperience = function (config, cv) {
 
     var academicExperience = d3.select("#" + config.descriptionId)
 	.append('div')
@@ -211,14 +211,14 @@ var drawAcademicExperience = function (config, resume) {
         .text('Academic Experience');
 
     academicExperience.selectAll()
-    	.data(resume.academicExperience)
+    	.data(cv.academicExperience)
     	.enter()
     	.append('div')
     	.attr('class', 'description-academic-experience')
-	.html(academicExperienceDescription(config, resume))
-	.on('click', scrollToTimelineEntry(config, resume))
-	.on('mouseover', highlightEntry(config, resume))
-	.on('mouseout', unhighlightDescriptionEntry(config, resume))
+	.html(academicExperienceDescription(config, cv))
+	.on('click', scrollToTimelineEntry(config, cv))
+	.on('mouseover', highlightEntry(config, cv))
+	.on('mouseout', unhighlightDescriptionEntry(config, cv))
     ;
 };
 
@@ -268,7 +268,7 @@ var scrollTimelineTween = function (config, original, offset) {
     };
 };
 
-var scrollToTimelineEntry = function (config, resume) {
+var scrollToTimelineEntry = function (config, cv) {
     return function (d) {
 	var timeline = findTimelineEntry(config, d);
 	d3.select(timeline).style("fill", '#f1c40f');
@@ -300,7 +300,7 @@ var scrollToTimelineEntry = function (config, resume) {
     };
 };
 
-var scrollToDescriptionEntry = function (config, resume) {
+var scrollToDescriptionEntry = function (config, cv) {
     return function (d) {
 	var descriptionEntry = findDescription(config, d);
 	var originalScroll = d3.select("#" + config.descriptionId).property('scrollTop');
@@ -325,7 +325,7 @@ var scrollToDescriptionEntry = function (config, resume) {
     }
 };
 
-var highlightEntry = function (config, resume) {
+var highlightEntry = function (config, cv) {
     return function (d) {
 
 	var timeline = findTimelineEntry(config, d);
@@ -338,7 +338,7 @@ var highlightEntry = function (config, resume) {
     }
 };
 
-var unhighlightDescriptionEntry = function (config, resume) {
+var unhighlightDescriptionEntry = function (config, cv) {
     return function (d) {
 	var descriptionEntry = findDescription(config, d);
 	d3.select(descriptionEntry).style("background", config.defaultBackground);
@@ -382,7 +382,7 @@ var timelineBoxX = function (scale) {
     };
 };
 
-var timelineBoxY = function (config, type) {
+var timelineBoxY = function (cv, config, type) {
     var professionalCollisionOffset = timelineBoxHeight(config)() / 2;
     var academicCollisionOffset = timelineBoxHeight(config)();
 
@@ -392,14 +392,14 @@ var timelineBoxY = function (config, type) {
 
     if (type === "professional") {
 	return function (d) {
-	    var isCollision = isDateCollision(d, resume.degrees);
+	    var isCollision = isDateCollision(d, cv.degrees);
 	    return boxOffset(d) - (isCollision ? professionalCollisionOffset : 0);
 	};
     }
 
     if (type === "academic") {
 	return function (d) {
-	    var isCollision = isDateCollision(d, resume.degrees);
+	    var isCollision = isDateCollision(d, cv.degrees);
 	    return boxOffset(d) - (isCollision ? academicCollisionOffset : 0);
 	};
     }
@@ -415,7 +415,7 @@ var timelineBoxHeight = function (config) {
     }
 };
 
-var findMinYear = function (resume) {
+var findMinYear = function (cv) {
     var extractDates = function (d) {
 	if (d.end) {
 	    return [d.start, d.end];
@@ -423,15 +423,15 @@ var findMinYear = function (resume) {
 	return [d.start];
     };
 
-    var allDates = resume.degrees.map(extractDates)
-	.concat(resume.professionalExperience.map(extractDates), resume.academicExperience.map(extractDates))
+    var allDates = cv.degrees.map(extractDates)
+	.concat(cv.professionalExperience.map(extractDates), cv.academicExperience.map(extractDates))
 	.reduce(function (accum, next) { return accum.concat(next); })
     ;
 
     return d3.min(allDates).getFullYear();
 };
 
-var drawTimeline = function (config, resume) {
+var drawTimeline = function (config, cv) {
     var width = config.timelineWidth;
     var height = config.timelineHeight;
 
@@ -449,7 +449,7 @@ var drawTimeline = function (config, resume) {
 	.attr("height", height + "px")
     ;
 
-    var minYear = findMinYear(resume);
+    var minYear = findMinYear(cv);
     var startDate = new Date(minYear, 0, 0);
     var endDate = new Date();
 
@@ -471,29 +471,29 @@ var drawTimeline = function (config, resume) {
     	.call(axis);
 
     timeline.selectAll('.timeline')
-	.data(resume.academicExperience.concat(resume.degrees))
+	.data(cv.academicExperience.concat(cv.degrees))
 	.enter()
 	.append('rect')
 	.attr('class', 'timeline-academic-experience')
 	.attr('x', timelineBoxX(scale))
-	.attr('y', timelineBoxY(config, "academic"))
+	.attr('y', timelineBoxY(cv, config, "academic"))
 	.attr('width', timelineBoxWidth(scale))
 	.attr('height', timelineBoxHeight(config))
-	.on('mouseover', scrollToDescriptionEntry(config, resume))
-	.on('mouseout', unhighlightDescriptionEntry(config, resume))
+	.on('mouseover', scrollToDescriptionEntry(config, cv))
+	.on('mouseout', unhighlightDescriptionEntry(config, cv))
     ;
 
     timeline.selectAll('.timeline')
-	.data(resume.professionalExperience)
+	.data(cv.professionalExperience)
 	.enter()
 	.append('rect')
 	.attr('class', 'timeline-professional-experience')
 	.attr('x', timelineBoxX(scale))
-	.attr('y', timelineBoxY(config, "professional"))
+	.attr('y', timelineBoxY(cv, config, "professional"))
 	.attr('width', timelineBoxWidth(scale))
 	.attr('height', timelineBoxHeight(config))
-	.on('mouseover', scrollToDescriptionEntry(config, resume))
-	.on('mouseout', unhighlightDescriptionEntry(config, resume))
+	.on('mouseover', scrollToDescriptionEntry(config, cv))
+	.on('mouseout', unhighlightDescriptionEntry(config, cv))
     ;
 
     var viewWidth = window.innerWidth || document.documentElement.clientWidth;
@@ -510,7 +510,7 @@ var drawTimeline = function (config, resume) {
 	.tween("scroll", initialScrollTween);
 }
 
-var drawDescription = function (config, resume) {
+var drawDescription = function (config, cv) {
     var height = window.innerHeight - config.timelineHeight - config.timelineMargin;
     d3.select("#" + config.containerId)
 	.append("div")
@@ -520,10 +520,10 @@ var drawDescription = function (config, resume) {
     ;
 };
 
-drawResume = function (resume) {
+drawCV = function (cv) {
     var config = {
 	preferredBoxHeight: 20,
-        containerWidth: d3.select("#resume-container").property("clientWidth"),
+        containerWidth: d3.select("#cv-container").property("clientWidth"),
 	timelineMargin: 20,
 	timelineWidth: 3000,
 	timelineHeight: 90,
@@ -532,17 +532,17 @@ drawResume = function (resume) {
 	defaultBackground: '#fff',
 	highlightColor: '#fff',
 	highlightBackground: '#2c3e50',
-	containerId: 'resume-container',
-	descriptionId: 'resume-description',
+	containerId: 'cv-container',
+	descriptionId: 'cv-description',
 	timelineContainerId: 'timeline-container',
-	timelineId: 'resume-timeline',
+	timelineId: 'cv-timeline',
 	monthYearFormat: d3.time.format('%m/%Y'),
     };
 
-    drawDescription(config, resume);
-    drawHeader(config, resume);
-    drawProfessionalExperience(config, resume);
-    drawEducation(config, resume);
-    drawAcademicExperience(config, resume);
-    drawTimeline(config, resume);
+    drawDescription(config, cv);
+    drawHeader(config, cv);
+    drawProfessionalExperience(config, cv);
+    drawEducation(config, cv);
+    drawAcademicExperience(config, cv);
+    drawTimeline(config, cv);
 };

@@ -18,19 +18,19 @@ a:hover {
     shape-rendering: crispEdges;
 }
 
-.resume-row {
+.cv-row {
     width: 100%;
 }
 
-.resume-column {
+.cv-column {
     display: inline-block;
 }
 
-#resume-container {
+#cv-container {
     background-color: #fff;
 }
 
-#resume-timeline {
+#cv-timeline {
     font-family: 'EB Garamond';
     font-size: 13pt;
     font-weight: 400;
@@ -38,7 +38,7 @@ a:hover {
     background-color: #fff;
 }
 
-#resume-description {
+#cv-description {
     overflow: scroll;
 }
 

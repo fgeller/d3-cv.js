@@ -1,4 +1,4 @@
-var resume = {
+var data = {
     name: "Donald Duck",
     summary: "Experienced functional programmer with love for immutability. Happy uncle of three.",
     email: "donald@example.com",
@@ -95,4 +95,4 @@ var resume = {
 };
 
 
-drawResume(resume);
+drawCV(data);
