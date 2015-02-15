@@ -329,16 +329,14 @@ var highlightEntry = function (config, cv) {
 
 	var descriptionEntry = findDescription(config, d);
 	d3.select(descriptionEntry)
-	    .style("background", config.highlightBackground)
-	    .style("color", config.highlightColor)
+	    .style("border-color", config.highlightBackground)
     }
 };
 
 var unhighlightDescriptionEntry = function (config, cv) {
     return function (d) {
 	var descriptionEntry = findDescription(config, d);
-	d3.select(descriptionEntry).style("background", config.defaultBackground);
-	d3.select(descriptionEntry).style("color", config.defaultColor);
+	d3.select(descriptionEntry).style("border-color", config.defaultBackground);
 
 	var timelineEntry = findTimelineEntry(config, d);
 	var timelineEntryClass = d3.select(timelineEntry).attr('class');
@@ -529,7 +527,7 @@ drawCV = function (cv) {
 	defaultColor: '#2c3e50',
 	defaultBackground: '#fff',
 	highlightColor: '#fff',
-	highlightBackground: '#2c3e50',
+	highlightBackground: '#f1c40f',
 	containerId: 'cv-container',
 	descriptionId: 'cv-description',
 	timelineContainerId: 'timeline-container',
