@@ -1,6 +1,6 @@
 var row = function (contents) {
     var html = '';
-    html += '<div class="cv-row">'
+    html += '<div class="cv-row">';
     html += contents;
     html += '</div>';
 
@@ -18,7 +18,7 @@ var column = function (num, denom, contents) {
 
 var div = function (klass, contents) {
     return '<div class="' + klass + '">' + contents + '</div>';
-}
+};
 
 var span = function (klass, contents) {
     return '<span class="' + klass + '">' + contents + '</span>';
@@ -49,7 +49,7 @@ var headerDescription = function (config, cv) {
 	row(column(20, 24, name) + column(4, 24, links)) +
 	    row(column(1, 1, summary))
     );
-}
+};
 
 var drawHeader = function (config, cv) {
     var header = d3.select("#" + config.descriptionId)
@@ -93,7 +93,7 @@ var professionalExperienceDescription = function (config, cv) {
 	);
 
 	return header + lines;
-    }
+    };
 };
 
 var drawProfessionalExperience = function (config, cv) {
@@ -108,10 +108,10 @@ var drawProfessionalExperience = function (config, cv) {
         .text('Professional Experience');
 
     professionalExperience.selectAll()
-    	.data(cv.professionalExperience)
-    	.enter()
-    	.append('div')
-    	.attr('class', 'description-professional-experience')
+	.data(cv.professionalExperience)
+	.enter()
+	.append('div')
+	.attr('class', 'description-professional-experience')
 	.html(professionalExperienceDescription(config, cv))
 	.on('click', scrollToTimelineEntry(config, cv))
 	.on('mouseover', highlightEntry(config, cv))
@@ -152,7 +152,7 @@ var educationDegreeDescription = function (config, cv) {
 	);
 
 	return header + lines;
-    }
+    };
 };
 
 var drawEducation = function (config, cv) {
@@ -166,10 +166,10 @@ var drawEducation = function (config, cv) {
         .text('Education');
 
     education.selectAll()
-    	.data(cv.degrees)
-    	.enter()
-    	.append('div')
-    	.attr('class', 'description-education-degree')
+	.data(cv.degrees)
+	.enter()
+	.append('div')
+	.attr('class', 'description-education-degree')
 	.html(educationDegreeDescription(config, cv))
 	.on('click', scrollToTimelineEntry(config, cv))
 	.on('mouseover', highlightEntry(config, cv))
@@ -196,7 +196,7 @@ var academicExperienceDescription = function (config, cv) {
 	);
 
 	return row(column(20, 24, summary) + column(4, 24, dates));
-    }
+    };
 };
 
 var drawAcademicExperience = function (config, cv) {
@@ -211,10 +211,10 @@ var drawAcademicExperience = function (config, cv) {
         .text('Academic Experience');
 
     academicExperience.selectAll()
-    	.data(cv.academicExperience)
-    	.enter()
-    	.append('div')
-    	.attr('class', 'description-academic-experience')
+	.data(cv.academicExperience)
+	.enter()
+	.append('div')
+	.attr('class', 'description-academic-experience')
 	.html(academicExperienceDescription(config, cv))
 	.on('click', scrollToTimelineEntry(config, cv))
 	.on('mouseover', highlightEntry(config, cv))
@@ -226,11 +226,11 @@ var elementBottomOffset = function (config, el) {
     var rect = el.getBoundingClientRect();
     var viewHeight = window.innerHeight || document.documentElement.clientHeight;
     return rect.bottom - viewHeight + config.timelineHeight + config.timelineMargin;
-}
+};
 
 var elementTopOffset = function (config, el) {
     return el.getBoundingClientRect().top - config.timelineMargin;
-}
+};
 
 var findDescription = function (config, d) {
     return d3.selectAll("div").filter(
@@ -291,7 +291,7 @@ var scrollToTimelineEntry = function (config, cv) {
 	    targetScrollLeft = timelineOriginalScroll - (viewWidth / 2) + rightOffset;
 	}
 
-	timelineScrollTransition = d3.select('#' + config.timelineContainerId)
+	d3.select('#' + config.timelineContainerId)
 	    .transition()
 	    .delay(100)
 	    .duration(700)
@@ -318,7 +318,7 @@ var scrollToDescriptionEntry = function (config, cv) {
 		.duration(600)
 		.tween("scroll", scrollDescriptionTween(config, originalScroll, descriptionTopOffset));
 	}
-    }
+    };
 };
 
 var highlightEntry = function (config, cv) {
@@ -329,8 +329,8 @@ var highlightEntry = function (config, cv) {
 
 	var descriptionEntry = findDescription(config, d);
 	d3.select(descriptionEntry)
-	    .style("border-color", config.highlightBackground)
-    }
+	    .style("border-color", config.highlightBackground);
+    };
 };
 
 var unhighlightDescriptionEntry = function (config, cv) {
@@ -345,12 +345,12 @@ var unhighlightDescriptionEntry = function (config, cv) {
 	} else {
 	    d3.select(timelineEntry).style('fill', '#2c3e50');
 	}
-    }
+    };
 };
 
 var isDateCollision = function (entry, others) {
     var contains = function (entry, date) {
-	return date > entry.start && date < entry.end
+	return date > entry.start && date < entry.end;
     };
 
     return others.some(
@@ -367,7 +367,7 @@ var timelineBoxWidth = function (scale) {
 	}
 
 	return scale(d.end) - scale(d.start);
-    }
+    };
 };
 
 var timelineBoxX = function (scale) {
@@ -406,7 +406,7 @@ var timelineBoxY = function (cv, config, type) {
 var timelineBoxHeight = function (config) {
     return function (d) {
 	return config.preferredBoxHeight;
-    }
+    };
 };
 
 var findMinYear = function (cv) {
@@ -460,9 +460,9 @@ var drawTimeline = function (config, cv) {
 	.tickSize(5, 0);
 
     timeline.append('g')
-    	.attr('transform', 'translate(0, ' + (height / 1.618) + ')')
-    	.attr('class', 'axis')
-    	.call(axis);
+	.attr('transform', 'translate(0, ' + (height / 1.618) + ')')
+	.attr('class', 'axis')
+	.call(axis);
 
     timeline.selectAll('.timeline')
 	.data(cv.academicExperience.concat(cv.degrees))
@@ -504,7 +504,7 @@ var drawTimeline = function (config, cv) {
 	.transition()
 	.duration(3000)
 	.tween("scroll", initialScrollTween);
-}
+};
 
 var drawDescription = function (config, cv) {
     var height = window.innerHeight - config.timelineHeight - config.timelineMargin;
