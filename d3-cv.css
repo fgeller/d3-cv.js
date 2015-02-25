@@ -3,16 +3,16 @@ body {
     margin: .5em;
 }
 
-a {
+#cv-container a {
     color: #2c3e50;
     text-decoration: none;
 }
 
-a:hover {
+#cv-container a:hover {
     color: #27ae60;
 }
 
-.axis path, .axis line {
+#cv-container .axis path, .axis line {
     fill: none;
     stroke: #2c3e50;
     shape-rendering: crispEdges;
@@ -42,26 +42,26 @@ a:hover {
     overflow: scroll;
 }
 
-#timeline-container {
+#cv-timeline-container {
     position: fixed;
     bottom: 0;
     overflow: scroll;
     border-top: 2pt solid #2c3e50;
 }
 
-.timeline-professional-experience {
+.cv-timeline-professional-experience {
     fill: #27ae60;
     stroke: #fff;
     shape-rendering: crispEdges;
 }
 
-.timeline-academic-experience {
+.cv-timeline-academic-experience {
     fill: #2c3e50;
     stroke: #fff;
     shape-rendering: crispEdges;
 }
 
-.description-section-header {
+.cv-description-section-header {
     margin-top: 1em;
     margin-bottom: .5em;
     font-family: 'Raleway';
@@ -71,7 +71,7 @@ a:hover {
     color: #27ae60;
 }
 
-.description-header-name {
+.cv-description-header-name {
     font-family: Raleway;
     font-weight: 100;
     font-size: 48pt;
@@ -79,28 +79,28 @@ a:hover {
     color: #27ae60;
 }
 
-.description-header-summary {
+.cv-description-header-summary {
     font-family: 'EB Garamond';
     font-size: 13pt;
 }
 
-.description-header-email {
+.cv-description-header-email {
     font-size: 32pt;
 }
 
-.description-header-github {
+.cv-description-header-github {
     font-size: 32pt;
 }
 
-.description-header-linkedin {
+.cv-description-header-linkedin {
     font-size: 32pt;
 }
 
-.description-professional-experience-dates {
+.cv-description-professional-experience-dates {
     text-align: right;
 }
 
-.description-professional-experience {
+.cv-description-professional-experience {
     font-family: 'EB Garamond';
     font-size: 13pt;
     padding: .2em;
@@ -108,49 +108,49 @@ a:hover {
     border-left: 5pt solid white;
 }
 
-.description-professional-experience .pure-g {
+.cv-description-professional-experience .pure-g {
     font-family: 'EB Garamond';
     font-size: 13pt;
 }
 
-.description-professional-experience {
+.cv-description-professional-experience {
     font-family: 'EB Garamond';
     font-size: 13pt;
 }
 
-.description-professional-experience-lines {
+.cv-description-professional-experience-lines {
     margin-left: 1em;
 }
 
 
-.description-education-degree {
+.cv-description-education-degree {
     padding: .2em;
 }
 
-.description-education-degree-dates {
+.cv-description-education-degree-dates {
     text-align: right;
 }
 
-.description-education-degree {
+.cv-description-education-degree {
     font-family: 'EB Garamond';
     font-size: 13pt;
     cursor: pointer;
     border-left: 5pt solid white;
 }
 
-.description-education-degree-lines {
+.cv-description-education-degree-lines {
     margin-left: 1em;
 }
 
-.description-academic-experience {
+.cv-description-academic-experience {
     padding: .2em;
 }
 
-.description-academic-experience-dates {
+.cv-description-academic-experience-dates {
     text-align: right;
 }
 
-.description-academic-experience {
+.cv-description-academic-experience {
     font-family: 'EB Garamond';
     font-size: 13pt;
     cursor: pointer;
