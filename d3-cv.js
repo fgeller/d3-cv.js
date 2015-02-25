@@ -25,24 +25,24 @@ var span = function (klass, contents) {
 };
 
 var headerDescription = function (config, cv) {
-  var name = '<div class="description-header-name">' + cv.name + '</div>';
+  var name = '<div class="cv-description-header-name">' + cv.name + '</div>';
 
   var email = div(
-    'description-header-email',
+    'cv-description-header-email',
     '<a href="mailto:' + cv.email + '"><i class="fa fa-envelope-square"></i></a>'
   );
 
   var linkedin = div(
-    'description-header-linkedin',
+    'cv-description-header-linkedin',
     '<a href="' + cv.linkedin + '"><i class="fa fa-linkedin-square"></i></a>'
   );
 
   var github = div(
-    'description-header-github',
+    'cv-description-header-github',
     '<a href="' + cv.github + '"><i class="fa fa-github-square"></i></a>'
   );
 
-  var summary = div('description-header-summary', cv.summary);
+  var summary = div('cv-description-header-summary', cv.summary);
 
   var links = row(column(8, 24, email) + column(8, 24, github) + column(8, 24, linkedin));
   return (
@@ -61,33 +61,33 @@ var drawHeader = function (config, cv) {
 var professionalExperienceDescription = function (config, cv) {
   return function (d) {
     var summary = div(
-      "description-professional-experience-summary",
-      span("description-professional-experience-title", d.title) +
+      "cv-description-professional-experience-summary",
+      span("cv-description-professional-experience-title", d.title) +
         ' — ' +
-        span("description-professional-experience-role", d.role || "") +
+        span("cv-description-professional-experience-role", d.role || "") +
         ' at ' +
-        span("description-professional-experience-company", d.company) +
+        span("cv-description-professional-experience-company", d.company) +
         ' in ' +
-        span('description-professional-experience-location', d.location)
+        span('cv-description-professional-experience-location', d.location)
     );
 
     var dates = div(
-      "description-professional-experience-dates",
+      "cv-cv-description-professional-experience-dates",
       span("description-professional-date-start", config.monthYearFormat(d.start)) +
         '—' +
         span("description-professional-date-end", (d.end ? config.monthYearFormat(d.end) : 'present'))
     );
 
     var header = div(
-      "description-professional-experience-header",
+      "cv-description-professional-experience-header",
       row(column(20, 24, summary) + column(4, 24, dates))
     );
 
     var lines = div(
-      "description-professional-experience-lines",
+      "cv-description-professional-experience-lines",
       d.summary.map(
         function(lineContents) {
-          return row(column(1,1, div("description-professional-experience-line", lineContents)));
+          return row(column(1,1, div("cv-description-professional-experience-line", lineContents)));
         }
       ).join("")
     );
@@ -104,14 +104,14 @@ var drawProfessionalExperience = function (config, cv) {
 
   professionalExperience
     .append('div')
-    .attr('class', 'description-section-header')
+    .attr('class', 'cv-description-section-header')
     .text('Professional Experience');
 
   professionalExperience.selectAll()
     .data(cv.professionalExperience)
     .enter()
     .append('div')
-    .attr('class', 'description-professional-experience')
+    .attr('class', 'cv-description-professional-experience')
     .html(professionalExperienceDescription(config, cv))
     .on('click', scrollToTimelineEntry(config, cv))
     .on('mouseover', highlightEntry(config, cv))
@@ -125,28 +125,28 @@ var educationDegreeDescription = function (config, cv) {
     var html = '';
 
     var title = div(
-      'description-education-degree-summary',
-      span("description-education-degree-title", d.degree) +
+      'cv-description-education-degree-summary',
+      span("cv-description-education-degree-title", d.degree) +
         ' at ' +
-        span("description-education-degree-institution", d.institution) +
+        span("cv-description-education-degree-institution", d.institution) +
         ', ' +
-        span("description-education-degree-location", d.location)
+        span("cv-description-education-degree-location", d.location)
     );
 
     var dates = div(
-      'description-education-degree-dates',
-      span("description-education-degree-start", config.monthYearFormat(d.start)) +
+      'cv-description-education-degree-dates',
+      span("cv-description-education-degree-start", config.monthYearFormat(d.start)) +
         '—' +
-        span("description-education-degree-end", (d.end ? config.monthYearFormat(d.end) : 'present'))
+        span("cv-description-education-degree-end", (d.end ? config.monthYearFormat(d.end) : 'present'))
     );
 
     var header = row(column(20, 24, title) + column(4, 24, dates));
 
     var lines = div(
-      "description-education-degree-lines",
+      "cv-description-education-degree-lines",
       d.summary.map(
         function(line) {
-          return row(column(1, 1, div("description-education-degree-line", line)));
+          return row(column(1, 1, div("cv-description-education-degree-line", line)));
         }
       ).join('')
     );
@@ -162,14 +162,14 @@ var drawEducation = function (config, cv) {
 
   education
     .append('div')
-    .attr('class', 'description-section-header')
+    .attr('class', 'cv-description-section-header')
     .text('Education');
 
   education.selectAll()
     .data(cv.degrees)
     .enter()
     .append('div')
-    .attr('class', 'description-education-degree')
+    .attr('class', 'cv-description-education-degree')
     .html(educationDegreeDescription(config, cv))
     .on('click', scrollToTimelineEntry(config, cv))
     .on('mouseover', highlightEntry(config, cv))
@@ -180,19 +180,19 @@ var drawEducation = function (config, cv) {
 var academicExperienceDescription = function (config, cv) {
   return function (d) {
     var summary = div(
-      'description-academic-experience-summary',
-      span('description-academic-experience-title', d.title) +
+      'cv-description-academic-experience-summary',
+      span('cv-description-academic-experience-title', d.title) +
         ' at ' +
-        span('description-academic-experience-institution', d.institution) +
+        span('cv-description-academic-experience-institution', d.institution) +
         ' in ' +
-        span('description-academic-experience-location', d.location)
+        span('cv-description-academic-experience-location', d.location)
     );
 
     var dates = div(
-      "description-academic-experience-dates",
-      span("description-academic-experience-start", config.monthYearFormat(d.start)) +
+      "cv-description-academic-experience-dates",
+      span("cv-description-academic-experience-start", config.monthYearFormat(d.start)) +
         '—' +
-        span("description-academic-experience-end", (d.end ? config.monthYearFormat(d.end) : 'present'))
+        span("cv-description-academic-experience-end", (d.end ? config.monthYearFormat(d.end) : 'present'))
     );
 
     return row(column(20, 24, summary) + column(4, 24, dates));
@@ -207,14 +207,14 @@ var drawAcademicExperience = function (config, cv) {
 
   academicExperience
     .append('div')
-    .attr('class', 'description-section-header')
+    .attr('class', 'cv-description-section-header')
     .text('Academic Experience');
 
   academicExperience.selectAll()
     .data(cv.academicExperience)
     .enter()
     .append('div')
-    .attr('class', 'description-academic-experience')
+    .attr('class', 'cv-description-academic-experience')
     .html(academicExperienceDescription(config, cv))
     .on('click', scrollToTimelineEntry(config, cv))
     .on('mouseover', highlightEntry(config, cv))
@@ -468,7 +468,7 @@ var drawTimeline = function (config, cv) {
     .data(cv.academicExperience.concat(cv.degrees))
     .enter()
     .append('rect')
-    .attr('class', 'timeline-academic-experience')
+    .attr('class', 'cv-timeline-academic-experience')
     .attr('x', timelineBoxX(scale))
     .attr('y', timelineBoxY(cv, config, "academic"))
     .attr('width', timelineBoxWidth(scale))
@@ -482,7 +482,7 @@ var drawTimeline = function (config, cv) {
     .data(cv.professionalExperience)
     .enter()
     .append('rect')
-    .attr('class', 'timeline-professional-experience')
+    .attr('class', 'cv-timeline-professional-experience')
     .attr('x', timelineBoxX(scale))
     .attr('y', timelineBoxY(cv, config, "professional"))
     .attr('width', timelineBoxWidth(scale))
@@ -523,14 +523,14 @@ drawCV = function (cv) {
     timelineMargin: 20,
     timelineWidth: 3000,
     timelineHeight: 90,
-    timelineProfessionalExperienceClass: 'timeline-professional-experience',
+    timelineProfessionalExperienceClass: 'cv-timeline-professional-experience',
     defaultColor: '#2c3e50',
     defaultBackground: '#fff',
     highlightColor: '#fff',
     highlightBackground: '#f1c40f',
     containerId: 'cv-container',
     descriptionId: 'cv-description',
-    timelineContainerId: 'timeline-container',
+    timelineContainerId: 'cv-timeline-container',
     timelineId: 'cv-timeline',
     monthYearFormat: d3.time.format('%m/%Y'),
   };
